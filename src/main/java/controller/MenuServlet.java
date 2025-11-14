@@ -36,6 +36,7 @@ public class MenuServlet extends HttpServlet {
 		//メニューとカテゴリー情報をスコープに保存
 		
 		
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/menu.jsp");
 		dispatcher.forward(request, response);
 	}
