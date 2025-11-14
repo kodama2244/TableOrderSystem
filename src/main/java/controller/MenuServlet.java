@@ -44,7 +44,17 @@ public class MenuServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-	
+
+		
+		//カテゴリー情報をgetする
+		//DBからメニューとってくる
+		//メニューとカテゴリー情報をスコープに保存
+		
+		
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/menu.jsp");
+		dispatcher.forward(request, response);
+		
 	}
 
 }
