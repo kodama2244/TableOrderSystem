@@ -1,11 +1,15 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.dto.ProductOptionDTO;
+import model.service.MenuService;
 
 /**
  * Servlet implementation class SingleItemServlet
@@ -27,8 +31,14 @@ public class SingleItemServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		
-		
+		String product = request.getParameter("id");
+		MenuService ms = new MenuService();
+		List<ProductOptionDTO> product = ms.getProduct(product);
+		SingleItemViewModel sivm = new SingleItemViewModel();
+		sivm.setItem(product);
+		request.setAttribute("sivm", sivm);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/menu.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

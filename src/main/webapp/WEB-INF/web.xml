@@ -29,4 +29,24 @@
     <servlet-name>SingleItemServlet</servlet-name>
     <url-pattern>/SingleItemServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TabletNumberServlet</display-name>
+    <servlet-name>TabletNumberServlet</servlet-name>
+    <servlet-class>controller.TabletNumberServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TabletNumberServlet</servlet-name>
+    <url-pattern>/TabletNumberServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>welcomServlet</display-name>
+    <servlet-name>welcomServlet</servlet-name>
+    <servlet-class>controller.welcomServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>welcomServlet</servlet-name>
+    <url-pattern>/welcomServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
