@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.dto.ProductOptionDTO;
 import model.service.MenuService;
+import viewmodel.SingleItemViewModel;
 
 /**
  * Servlet implementation class SingleItemServlet
@@ -23,6 +24,14 @@ public class SingleItemServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		String productId = request.getParameter("id");
+		MenuService ms = new MenuService();
+		List<ProductOptionDTO> products = ms.getProduct(productId);
+		SingleItemViewModel sivm = new SingleItemViewModel();
+		sivm.setProducts(products);
+		request.setAttribute("sivm", sivm);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/menu.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	/**
@@ -31,14 +40,7 @@ public class SingleItemServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		String product = request.getParameter("id");
-		MenuService ms = new MenuService();
-		List<ProductOptionDTO> product = ms.getProduct(product);
-		SingleItemViewModel sivm = new SingleItemViewModel();
-		sivm.setItem(product);
-		request.setAttribute("sivm", sivm);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/menu.jsp");
-		dispatcher.forward(request, response);
+
 	}
 
 }

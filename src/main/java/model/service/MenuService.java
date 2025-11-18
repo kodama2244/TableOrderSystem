@@ -11,8 +11,8 @@ public class MenuService {
 		return poDAO.getProduct(category);
 	}
 	
-	public List<ProductOptionDTO> getProduct(String product) {
+	public List<ProductOptionDTO> getProduct(String productId) {
 		ProductOptionDAO poDAO = new ProductOptionDAO();
-		return poDAO.getProduct(product);
+		return poDAO.getProduct(productId);
 	}
 }

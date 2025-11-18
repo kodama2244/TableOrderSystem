@@ -49,4 +49,54 @@
     <servlet-name>welcomServlet</servlet-name>
     <url-pattern>/welcomServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>categoryServlet</display-name>
+    <servlet-name>categoryServlet</servlet-name>
+    <servlet-class>controller.categoryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>categoryServlet</servlet-name>
+    <url-pattern>/categoryServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>NumberCustomersServlet</display-name>
+    <servlet-name>NumberCustomersServlet</servlet-name>
+    <servlet-class>controller.NumberCustomersServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NumberCustomersServlet</servlet-name>
+    <url-pattern>/NumberCustomersServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CartServlet</display-name>
+    <servlet-name>CartServlet</servlet-name>
+    <servlet-class>controller.CartServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CartServlet</servlet-name>
+    <url-pattern>/CartServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>OrderConfirmedServlet</display-name>
+    <servlet-name>OrderConfirmedServlet</servlet-name>
+    <servlet-class>controller.OrderConfirmedServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrderConfirmedServlet</servlet-name>
+    <url-pattern>/OrderConfirmedServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ThankyouServlet</display-name>
+    <servlet-name>ThankyouServlet</servlet-name>
+    <servlet-class>controller.ThankyouServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ThankyouServlet</servlet-name>
+    <url-pattern>/ThankyouServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

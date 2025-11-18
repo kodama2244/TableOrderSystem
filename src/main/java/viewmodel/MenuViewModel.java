@@ -1,41 +1,20 @@
 package viewmodel;
 
-public class MenuViewModel {
-	String productName;
-	int productPrice;
-	String productImage;
+import java.io.Serializable;
+import java.util.List;
 
-	public MenuViewModel() {
-	}
+import model.dto.ProductOptionDTO;
 
-	public MenuViewModel(String productName, int productPrice, String productImage) {
-		this.productName = productName;
-		this.productPrice = productPrice;
-		this.productImage = productImage;
-	}
+public class MenuViewModel implements Serializable {
+    private List<ProductOptionDTO> products;
 
-	public String getProductName() {
-		return productName;
-	}
+    public MenuViewModel() {}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
+    public List<ProductOptionDTO> getProducts() {
+        return products;
+    }
 
-	public int getProductPrice() {
-		return productPrice;
-	}
-
-	public void setProductPrice(int productPrice) {
-		this.productPrice = productPrice;
-	}
-
-	public String getProductImage() {
-		return productImage;
-	}
-
-	public void setProductImage(String productImage) {
-		this.productImage = productImage;
-	}
-
+    public void setProducts(List<ProductOptionDTO> products) {
+        this.products = products;
+    }
 }
