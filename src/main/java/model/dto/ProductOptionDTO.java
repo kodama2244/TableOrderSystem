@@ -58,8 +58,4 @@ public class ProductOptionDTO {
 	public void setOptionPrice(int optionPrice) {
 		this.optionPrice = optionPrice;
 	}
-	
-	
-		
-	
 }
