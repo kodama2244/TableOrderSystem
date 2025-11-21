@@ -25,9 +25,10 @@ public class MenuServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		String category = request.getParameter("category");
+		//String category = request.getParameter("category");
+		String category = "1";
 		MenuService ms = new MenuService();
-		List<ProductOptionDTO> products = ms.getProduct(category);
+		List<ProductOptionDTO> products = ms.getProducts(category);
 		MenuViewModel mvm = new MenuViewModel();
 		mvm.setProducts(products);
 		//DBからメニューとってくる

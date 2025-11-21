@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBManager {
-	private static final String CN_STRING = "jdbc:oracle:thin:@//10.40.112.10:1521/dbsys.jz.ac.jec.jp";
-	private static final String USER = "g2308";
+	private static final String CN_STRING = "jdbc:oracle:thin:@//10.40.112.10:1521/dbsys.jz.jec.ac.jp";
+	private static final String USER = "jz240116";
 	private static final String PASS = "pass";
 
 	private static DBManager self;
