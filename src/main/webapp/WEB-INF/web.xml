@@ -99,4 +99,14 @@
     <servlet-name>ThankyouServlet</servlet-name>
     <url-pattern>/ThankyouServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MenuManagementServlet</display-name>
+    <servlet-name>MenuManagementServlet</servlet-name>
+    <servlet-class>controller.MenuManagementServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MenuManagementServlet</servlet-name>
+    <url-pattern>/MenuManagementServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

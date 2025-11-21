@@ -36,14 +36,26 @@ td img {
 <title>メニュー一覧</title>
 </head>
 <body>
-<table border="1">
-  <c:forEach var="list" items="${mvm.products}">
+<form action="MenuServlet" method="get">
+  <table border="1">
     <tr>
-      <td><img alt="イメージ画像" src='assets/img/${list.productImage}'></td>
-      <td>${list.productName}</td>
-      <td>${list.productPrice}円</td>
+      <td><button type="submit" name="category" value="1">そば</button></td>
+      <td><button type="submit" name="category" value="2">うどん</button></td>
+      <td><button type="submit" name="category" value="3">丼もの</button></td>
+      <td><button type="submit" name="category" value="4">おすすめ</button></td>
+      <td><button type="submit" name="category" value="5">サイドメニュー</button></td>
+      <td><button type="submit" name="category" value="6">飲み物</button></td>
     </tr>
-  </c:forEach>
-</table>
+  </table>
+</form>
+	<table border="1">
+		<c:forEach var="list" items="${mvm.products}">
+			<tr>
+				<td><img alt="イメージ画像" src='assets/img/${list.productImage}'></td>
+				<td>${list.productName}</td>
+				<td>${list.productPrice}円</td>
+			</tr>
+		</c:forEach>
+	</table>
 </body>
 </html>
