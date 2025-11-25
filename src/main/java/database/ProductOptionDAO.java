@@ -40,4 +40,31 @@ public class ProductOptionDAO {
 		
 		return list;
 	}
+	
+	public void setProduct(List<String> plist) {
+	    DBManager manager = DBManager.getInstance();
+
+	    String sql = "INSERT INTO product("
+	            + "product_id, category_id, product_name, product_price, "
+	            + "product_description, product_image, product_allergy, created_at, updated_at"
+	            + ") VALUES (?, ?, ?, ?, ?, ?, ?, SYSDATE, SYSDATE)";
+
+	    try (Connection cn = manager.getConnection();
+	         PreparedStatement ps = cn.prepareStatement(sql)) {
+
+	        ps.setInt(1, Integer.parseInt(plist.get(0))); // product_id
+	        ps.setInt(2, Integer.parseInt(plist.get(1))); // category_id
+	        ps.setString(3, plist.get(2));                // product_name
+	        ps.setInt(4, Integer.parseInt(plist.get(3))); // product_price
+	        ps.setString(5, plist.get(4));                // product_description
+	        ps.setString(6, plist.get(5));                // product_image
+	        ps.setString(7, plist.get(6));                // product_allergy
+
+	        ps.executeUpdate();
+	        System.out.println("商品を登録しました。");
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 }
