@@ -1,15 +1,29 @@
 package model.dto;
 
 public class ProductOptionDTO {
+	private int productId;
 	private String productName;
 	private int productPrice;
 	private String productDescription;
 	private String productImage;
 	private String productAllergy;
+	private int optionId;
 	private String optionDescription;
 	private String optionName;
 	private int optionPrice;
 	
+	public int getOptionId() {
+		return optionId;
+	}
+	public void setOptionId(int optionId) {
+		this.optionId = optionId;
+	}
+	public int getProductId() {
+		return productId;
+	}
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
 	public String getProductName() {
 		return productName;
 	}

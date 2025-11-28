@@ -9,4 +9,8 @@ public class MenuManagementService {
 		ProductOptionDAO poDAO = new ProductOptionDAO();
 		poDAO.setProduct(plist);
 	}
+	public void DeleteProduct(String id) {
+		ProductOptionDAO poDAO = new ProductOptionDAO();
+		poDAO.DeleteProduct(id);
+	}
 }
