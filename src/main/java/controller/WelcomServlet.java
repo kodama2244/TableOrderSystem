@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class welcomServlet
  */
-public class welcomServlet extends HttpServlet {
+public class WelcomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**

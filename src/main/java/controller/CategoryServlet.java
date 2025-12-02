@@ -9,13 +9,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.dto.categoryDTO;
-import model.service.categoryService;
-import viewmodel.categoryViewModel;
+import model.service.CategoryService;
+import viewmodel.CategoryViewModel;
 
 /**
  * Servlet implementation class categoryServlet
  */
-public class categoryServlet extends HttpServlet {
+public class CategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -24,9 +24,9 @@ public class categoryServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		categoryService cs = new categoryService();
+		CategoryService cs = new CategoryService();
 		List<categoryDTO> category = cs.getCategory();
-		categoryViewModel cvm = new categoryViewModel();
+		CategoryViewModel cvm = new CategoryViewModel();
 		cvm.setCategory(category);
 		request.setAttribute("cvm", cvm);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/category.jsp");

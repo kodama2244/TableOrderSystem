@@ -5,10 +5,10 @@ import java.util.List;
 
 import model.dto.categoryDTO;
 
-public class categoryViewModel implements Serializable {
+public class CategoryViewModel implements Serializable {
     private List<categoryDTO> category;
 
-    public categoryViewModel() {}
+    public CategoryViewModel() {}
 
     public List<categoryDTO> getCategory() {
         return category;

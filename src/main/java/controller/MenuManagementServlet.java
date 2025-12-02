@@ -149,12 +149,13 @@ public class MenuManagementServlet extends HttpServlet {
 	}
 
 	private String getFileName(Part part) {
-		String contentDisp = part.getHeader("content-disposition");
-		for (String token : contentDisp.split(";")) {
-			if (token.trim().startsWith("filename")) {
-				return token.substring(token.indexOf('=') + 1).trim().replace("\"", "");
-			}
-		}
-		return null;
+	    String contentDisp = part.getHeader("content-disposition");
+	    for (String token : contentDisp.split(";")) {
+	        if (token.trim().startsWith("filename")) {
+	            String fullPath = token.substring(token.indexOf('=') + 1).replace("\"", "").trim();
+	            return new File(fullPath).getName(); // ファイル名だけ取り出す
+	        }
+	    }
+	    return null;
 	}
 }
