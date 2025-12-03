@@ -1,12 +1,16 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import viewmodel.CartViewModel;
 
 /**
  * Servlet implementation class CartServlet
@@ -40,6 +44,30 @@ public class CartServlet extends HttpServlet {
 		String optionPrice = request.getParameter("optionPrice");
 		String quantity = request.getParameter("quantity");
 		
+		CartViewModel cvm = new CartViewModel();
+		cvm.setProductId(Integer.parseInt(id));
+		cvm.setProductName(name);
+		cvm.setProductPrice(Integer.parseInt(price));
+		cvm.setOptionName(optionName);
+		cvm.setOptionPrice(Integer.parseInt(optionPrice));
+		cvm.setQuantity(Integer.parseInt(quantity));
+		
+		HttpSession session = request.getSession();
+		List<CartViewModel> cart = (List<CartViewModel>) session.getAttribute("cvm");
+		if (cart == null) {
+			cart = new ArrayList<>();
+		}
+		cart.add(cvm);
+		session.setAttribute("cvm", cart);
+		int totalAmount = 0;
+		for (CartViewModel item : cart) {
+		    int itemTotal = (item.getProductPrice() + item.getOptionPrice()) * item.getQuantity();
+		    totalAmount += itemTotal;
+		}
+		session.setAttribute("totalAmount", totalAmount);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/menu.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

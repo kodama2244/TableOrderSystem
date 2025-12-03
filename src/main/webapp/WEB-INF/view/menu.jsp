@@ -47,6 +47,7 @@ td img {
 				<td><button type="submit" name="category" value="6">飲み物</button></td>
 			</tr>
 		</table>
+		<a href="CartServlet">カートを見る</a>
 	</form>
 	<form action="SingleItemServlet" method="get">
 		<table border="1">
