@@ -27,7 +27,7 @@
 
 
 		<label>商品価格</label><br> <input type="text" name="productPrice"
-			value="${product.productPrice}"><br> <label>商品画像（変更する場合のみ選択）</label><br>
+			value="${product.productPrice}"><br> <label>商品画像</label><br>
 		<c:if test="${not empty product.productImage}">
 			<img src='assets/img/${product.productImage}' alt="商品画像" width="150">
 		</c:if>
