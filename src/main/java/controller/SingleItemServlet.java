@@ -29,11 +29,11 @@ public class SingleItemServlet extends HttpServlet {
 	    String productId = request.getParameter("id");
 	    System.out.print(productId);
 	    MenuService ms = new MenuService();
-	    List<ProductOptionDTO> products = ms.getProduct(productId); // 単品1件取得
+	    List<ProductOptionDTO> products = ms.getProductOption(productId); // 単品1件取得
 
-	    // ★★★ ここから修正/追加 ★★★
+	 
 	    if (products != null && !products.isEmpty()) { 
-	        // 31行目で発生していたエラーを回避するためのチェック
+	       
 	        
 	        ProductOptionDTO dto = products.get(0);
 	        SingleItemViewModel vm = new SingleItemViewModel();

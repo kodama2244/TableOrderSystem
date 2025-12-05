@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.dto.ProductDTO;
 import model.dto.ProductOptionDTO;
 
 public class ProductOptionDAO {
@@ -14,7 +15,7 @@ public class ProductOptionDAO {
 		ArrayList<ProductOptionDTO> list = new ArrayList<ProductOptionDTO>();
 		DBManager manager = DBManager.getInstance();
 		try (Connection cn = manager.getConnection()) {
-			String sql = "SELECT product_id, product_name, product_price, product_image FROM product WHERE category_id = ?";
+			String sql = "SELECT product_id, product_name, product_price, product_image, product_description, product_allergy FROM product WHERE category_id = ?";
 
 			PreparedStatement stmt = cn.prepareStatement(sql);
 			stmt.setString(1, category);
@@ -25,6 +26,8 @@ public class ProductOptionDAO {
 				dto.setProductName(rs.getString("product_name"));
 				dto.setProductPrice(rs.getInt("product_price"));
 				dto.setProductImage(rs.getString("product_image"));
+				dto.setProductDescription(rs.getString("product_description"));
+				dto.setProductAllergy(rs.getString("product_allergy"));
 				list.add(dto);
 			}
 			// データをリストに格納
@@ -108,5 +111,49 @@ public class ProductOptionDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void updateProduct(ProductDTO dto) {
+	    DBManager manager = DBManager.getInstance();
+	    boolean hasImage = dto.getProductImage() != null && !dto.getProductImage().isEmpty();
+
+	    String sql;
+	    if (hasImage) {
+	        sql = "UPDATE product SET category_id = ?, product_name = ?, product_price = ?, "
+	            + "product_description = ?, product_image = ?, product_allergy = ?, updated_at = SYSDATE "
+	            + "WHERE product_id = ?";
+	    } else {
+	        sql = "UPDATE product SET category_id = ?, product_name = ?, product_price = ?, "
+	            + "product_description = ?, product_allergy = ?, updated_at = SYSDATE "
+	            + "WHERE product_id = ?";
+	    }
+
+	    try (Connection cn = manager.getConnection();
+	         PreparedStatement ps = cn.prepareStatement(sql)) {
+
+	        ps.setInt(1, dto.getCategory());
+	        ps.setString(2, dto.getProductName());
+	        ps.setInt(3, dto.getProductPrice());
+	        ps.setString(4, dto.getProductDescription());
+
+	        if (hasImage) {
+	            ps.setString(5, dto.getProductImage());
+	            ps.setString(6, dto.getProductAllergy());
+	            ps.setInt(7, dto.getProductId());
+	        } else {
+	            ps.setString(5, dto.getProductAllergy());
+	            ps.setInt(6, dto.getProductId());
+	        }
+
+	        int updatedRows = ps.executeUpdate();
+	        if (updatedRows > 0) {
+	            System.out.println("商品を更新しました。更新件数: " + updatedRows);
+	        } else {
+	            System.out.println("更新対象がありません。productId=" + dto.getProductId());
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
 }

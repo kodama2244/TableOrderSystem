@@ -88,6 +88,16 @@ td img {
 		</table>
 	</form>
 	<table border="1">
+		<tr>
+			<th>商品ID</th>
+			<th>商品画像</th>
+			<th>商品名</th>
+			<th>商品価格</th>
+			<th>商品説明</th>
+			<th>商品アレルギー説明</th>
+			<th>削除</th>
+			<th>編集</th>
+		</tr>
 		<c:forEach var="list" items="${mvm.products}">
 			<tr>
 				<td>${list.productId}</td>
@@ -95,12 +105,19 @@ td img {
 					width="100" height="100"></td>
 				<td>${list.productName}</td>
 				<td>${list.productPrice}円</td>
+				<td>${list.productDescription}</td>
+				<td>${list.productAllergy}</td>
 				<td>
 					<form action="MenuManagementServlet" method="post">
 						<button type="submit" name="id" value="${list.productId}">削除</button>
 
 						<input type="hidden" name="action" value="delete"> <input
 							type="hidden" name="category" value="1">
+					</form>
+				</td>
+				<td>
+					<form action="EditProductServlet" method="get">
+						<button type="submit" name="id" value="${list.productId}">編集</button>
 					</form>
 				</td>
 			</tr>

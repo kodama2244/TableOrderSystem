@@ -26,6 +26,9 @@ public class MenuServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		String category = request.getParameter("category");
+		if (category == null) {
+			category = "1";
+		}
 //		String category = "1";
 		MenuService ms = new MenuService();
 		List<ProductOptionDTO> products = ms.getProducts(category);

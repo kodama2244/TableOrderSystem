@@ -10,7 +10,7 @@
 <body>
 <h1>メニュー表示・カート追加</h1>
 <a href="MenuServlet">MenuServletから</a>
-<h1>メニュー管理画面</h1>
+<h1>メニュー管理画面(追加・削除・編集)</h1>
 <a href="MenuManagementServlet">MenuManagementServletから</a>
 </body>
 </html>
