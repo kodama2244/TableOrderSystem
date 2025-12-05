@@ -10,7 +10,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.dto.ProductOptionDTO;
+import model.service.MenuService;
 import viewmodel.CartViewModel;
+import viewmodel.MenuViewModel;
 
 /**
  * Servlet implementation class CartServlet
@@ -26,7 +29,8 @@ public class CartServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		//セッションスコープに保存されてる商品を表示
-		
+		String category = request.getParameter("category");
+		request.setAttribute("category", category);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/cart.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -37,6 +41,7 @@ public class CartServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
+		String category = request.getParameter("category");
 		String id = request.getParameter("productId");
 		String name = request.getParameter("productName");
 		String price = request.getParameter("productPrice");
@@ -65,7 +70,11 @@ public class CartServlet extends HttpServlet {
 		    totalAmount += itemTotal;
 		}
 		session.setAttribute("totalAmount", totalAmount);
-
+		MenuService ms = new MenuService();
+		List<ProductOptionDTO> products = ms.getProducts(category);
+		MenuViewModel mvm = new MenuViewModel();
+		mvm.setProducts(products);
+		request.setAttribute("mvm", mvm);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/menu.jsp");
 		dispatcher.forward(request, response);
 	}

@@ -25,7 +25,7 @@ public class SingleItemServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
-	    
+	    String category = request.getParameter("category");
 	    String productId = request.getParameter("id");
 	    System.out.print(productId);
 	    MenuService ms = new MenuService();
@@ -50,6 +50,7 @@ public class SingleItemServlet extends HttpServlet {
 	        vm.setOptionPrice(dto.getOptionPrice());
 
 	        request.setAttribute("sivm", vm);
+	        request.setAttribute("category", category);
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/singleItem.jsp");
 	        dispatcher.forward(request, response);
 	        

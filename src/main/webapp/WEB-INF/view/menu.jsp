@@ -36,6 +36,9 @@ td img {
 <title>メニュー一覧</title>
 </head>
 <body>
+	<form action="CartServlet" method="get">
+		<button type="submit" name="category" value="${category}">カートを見る</button>
+	</form>
 	<form action="MenuServlet" method="get">
 		<table border="1">
 			<tr>
@@ -47,19 +50,17 @@ td img {
 				<td><button type="submit" name="category" value="6">飲み物</button></td>
 			</tr>
 		</table>
-		<a href="CartServlet">カートを見る</a>
 	</form>
 	<form action="SingleItemServlet" method="get">
 		<table border="1">
 			<c:forEach var="list" items="${mvm.products}">
 				<tr>
 					<td>${list.productId}</td>
-					<td>
+					<td><input type="hidden" name="category" value="${category}">
 						<button type="submit" name="id" value="${list.productId}">
 							<img alt="イメージ画像" src='assets/img/${list.productImage}'
 								width="100" height="100">
-						</button>
-					</td>
+						</button></td>
 					<td>${list.productName}</td>
 					<td>${list.productPrice}円</td>
 				</tr>
