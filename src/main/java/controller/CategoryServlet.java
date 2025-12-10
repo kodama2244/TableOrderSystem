@@ -1,20 +1,19 @@
 package controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.dto.categoryDTO;
-import model.service.CategoryService;
-import viewmodel.CategoryViewModel;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class categoryServlet
  */
+@WebServlet("/category")
 public class CategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -24,11 +23,9 @@ public class CategoryServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		CategoryService cs = new CategoryService();
-		List<categoryDTO> category = cs.getCategory();
-		CategoryViewModel cvm = new CategoryViewModel();
-		cvm.setCategory(category);
-		request.setAttribute("cvm", cvm);
+		String numberCustomer = request.getParameter("numberCustomer");
+		HttpSession session = request.getSession();
+		session.setAttribute("numberCustomer", numberCustomer);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/category.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -38,7 +35,7 @@ public class CategoryServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		//doGet(request, response);
 	}
 
 }

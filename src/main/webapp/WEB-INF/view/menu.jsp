@@ -39,6 +39,10 @@ td img {
 	<form action="CartServlet" method="get">
 		<button type="submit" name="category" value="${category}">カートを見る</button>
 	</form>
+	<form action="OrderHistoryServlet" method="get">
+		<button type="submit">注文履歴</button>
+	</form>
+	<h2>メニュー一覧</h2>
 	<form action="MenuServlet" method="get">
 		<table border="1">
 			<tr>

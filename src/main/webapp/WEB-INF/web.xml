@@ -119,4 +119,14 @@
     <servlet-name>EditProductServlet</servlet-name>
     <url-pattern>/EditProductServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>OrderHistoryServlet</display-name>
+    <servlet-name>OrderHistoryServlet</servlet-name>
+    <servlet-class>controller.OrderHistoryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrderHistoryServlet</servlet-name>
+    <url-pattern>/OrderHistoryServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

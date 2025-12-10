@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class welcomServlet
  */
+@WebServlet("/welcom")
 public class WelcomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -21,7 +23,7 @@ public class WelcomServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/menu.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/welcom.jsp");
 		dispatcher.forward(request, response);
 	}
 

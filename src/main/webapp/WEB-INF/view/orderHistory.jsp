@@ -4,11 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>いらっしゃいませ画面</title>
+<title>注文履歴</title>
 </head>
 <body>
-<form action="NumberCustomersServlet" method="get">
-<input type="submit" value="いらっしゃいませ">
-</form>
+<
 </body>
 </html>

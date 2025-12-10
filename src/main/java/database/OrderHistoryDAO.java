@@ -2,8 +2,12 @@ package database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+
+import model.dto.OrderHistoryDTO;
 
 public class OrderHistoryDAO {
 	public void setOrderHistory(List<String> productIds) {
@@ -21,5 +25,29 @@ public class OrderHistoryDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public List<OrderHistoryDTO> getOrderHistory() {
+		 List<OrderHistoryDTO> list = new ArrayList<>();
+		    DBManager manager = DBManager.getInstance();
+
+		    try (Connection cn = manager.getConnection()) {
+		        String sql = "SELECT * FROM ORDER_HISTORY";
+
+		        PreparedStatement stmt = cn.prepareStatement(sql);
+		        ResultSet rs = stmt.executeQuery();
+
+		        while (rs.next()) {
+                    OrderHistoryDTO dto = new OrderHistoryDTO();
+                     
+
+		            list.add(dto);
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		
+		
+		return list;
 	}
 }
