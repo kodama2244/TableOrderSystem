@@ -40,8 +40,8 @@
 		<form action="OrderConfirmedServlet" method="post">
 			<c:forEach var="item" items="${cvm}">
 				<input type="hidden" name="productId" value="${item.productId}" />
-				<input type="hidden" name="optionName" value="${item.optionName}" />
 				<input type="hidden" name="quantity" value="${item.quantity}" />
+				<input type="hidden" name="optionName" value="${item.optionid}" />
 			</c:forEach>
 			<input type="submit" value="注文を確定する">
 		</form>

@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class welcomServlet
@@ -22,7 +23,9 @@ public class WelcomServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		
+		String tableNumber = request.getParameter("tableNumber");
+		HttpSession session = request.getSession();
+		session.setAttribute("tableNumber", tableNumber);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/welcom.jsp");
 		dispatcher.forward(request, response);
 	}

@@ -2,10 +2,19 @@ package model.dto;
 
 public class OrderHistoryDTO {
 	private int productQuantity;
-	private String priductName;
+	private String productName;
 	private String statusName;
 	private String optionName;
-	private int tableNumber;
+	private int productPrice;
+
+	public int getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(int productPrice) {
+		this.productPrice = productPrice;
+	}
+
 	public int getProductQuantity() {
 		return productQuantity;
 	}
@@ -13,10 +22,10 @@ public class OrderHistoryDTO {
 		this.productQuantity = productQuantity;
 	}
 	public String getPriductName() {
-		return priductName;
+		return productName;
 	}
-	public void setPriductName(String priductName) {
-		this.priductName = priductName;
+	public void setPriductName(String productName) {
+		this.productName = productName;
 	}
 	public String getStatusName() {
 		return statusName;
@@ -29,12 +38,6 @@ public class OrderHistoryDTO {
 	}
 	public void setOptionName(String optionName) {
 		this.optionName = optionName;
-	}
-	public int getTableNumber() {
-		return tableNumber;
-	}
-	public void setTableNumber(int tableNumber) {
-		this.tableNumber = tableNumber;
 	}
 	
 }

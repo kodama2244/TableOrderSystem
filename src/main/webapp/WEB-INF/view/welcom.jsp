@@ -7,6 +7,7 @@
 <title>いらっしゃいませ画面</title>
 </head>
 <body>
+<h1>${tableNumber}卓</h1>
 <form action="NumberCustomersServlet" method="get">
 <input type="submit" value="いらっしゃいませ">
 </form>

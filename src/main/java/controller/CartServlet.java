@@ -45,6 +45,7 @@ public class CartServlet extends HttpServlet {
 		String id = request.getParameter("productId");
 		String name = request.getParameter("productName");
 		String price = request.getParameter("productPrice");
+		String optionId = request.getParameter("optionId");
 		String optionName = request.getParameter("optionName");
 		String optionPrice = request.getParameter("optionPrice");
 		String quantity = request.getParameter("quantity");
@@ -56,6 +57,7 @@ public class CartServlet extends HttpServlet {
 		cvm.setOptionName(optionName);
 		cvm.setOptionPrice(Integer.parseInt(optionPrice));
 		cvm.setQuantity(Integer.parseInt(quantity));
+		cvm.setOptionId(Integer.parseInt(optionId));
 		
 		HttpSession session = request.getSession();
 		List<CartViewModel> cart = (List<CartViewModel>) session.getAttribute("cvm");

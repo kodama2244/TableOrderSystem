@@ -7,6 +7,7 @@ public class CartViewModel implements Serializable {
 	private String productName;
 	private int productPrice;
 	private int quantity;
+	private int optionId;
 	private String optionName;
 	private int optionPrice;
 
@@ -21,6 +22,14 @@ public class CartViewModel implements Serializable {
 		this.optionName = optionName;
 		this.optionPrice = optionPrice;
 		this.quantity = quantity;
+	}
+	
+	public int getOptionId() {
+		return optionId;
+	}
+
+	public void setOptionId(int optionId) {
+		this.optionId = optionId;
 	}
 
 	public int getProductId() {

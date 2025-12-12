@@ -39,6 +39,7 @@
 		<input type="hidden" name="optionName" value="${sivm.optionName}">
 		<input type="hidden" name="optionPrice" value="${sivm.optionPrice}">
 		<input type="hidden" name="category" value="${category}">
+		<input tpe="hidden" name="optionId" value="${sivm.optionId}">
 		<input type="submit" value="カートに追加">
 	</form>
 	<c:if test="${not empty msg}">
