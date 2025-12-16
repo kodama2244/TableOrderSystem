@@ -33,13 +33,14 @@
 			<option value="3">3</option>
 			<option value="4">4</option>
 			<option value="5">5</option>
-		</select><br> <input type="hidden" name="productId"value="${sivm.productId}">
-		 <input type="hidden"name="productName" value="${sivm.productName}"> 
-		 <input type="hidden" name="productPrice" value="${sivm.productPrice}">
+		</select><br> 
+		<input type="hidden" name="productId"value="${sivm.productId}">
+		<input type="hidden"name="productName" value="${sivm.productName}"> 
+		<input type="hidden" name="productPrice" value="${sivm.productPrice}">
 		<input type="hidden" name="optionName" value="${sivm.optionName}">
 		<input type="hidden" name="optionPrice" value="${sivm.optionPrice}">
 		<input type="hidden" name="category" value="${category}">
-		<input tpe="hidden" name="optionId" value="${sivm.optionId}">
+		<input type="hidden" name="optionId" value="${sivm.optionId}">
 		<input type="submit" value="カートに追加">
 	</form>
 	<c:if test="${not empty msg}">

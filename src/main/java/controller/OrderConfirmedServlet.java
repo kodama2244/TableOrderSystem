@@ -49,7 +49,11 @@ public class OrderConfirmedServlet extends HttpServlet {
 				OrderItemDTO dto = new OrderItemDTO();
 				dto.setProductId(Integer.parseInt(productId[i]));
 				dto.setQuantity(Integer.parseInt(quantity[i]));
-				dto.setOptionId(Integer.parseInt(optionId[i]));
+			    if (optionId != null && optionId.length > i) {
+			        dto.setOptionId(Integer.parseInt(optionId[i]));
+			    } else {
+			        dto.setOptionId(0); // オプションなし
+			    }
 				orderItems.add(dto);
 			}	
 		}

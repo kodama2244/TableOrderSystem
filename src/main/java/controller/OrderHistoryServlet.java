@@ -31,7 +31,7 @@ public class OrderHistoryServlet extends HttpServlet {
 		OrderHistoryViewModel ovm = new OrderHistoryViewModel();
 		ovm.setOrderHistorys(history);
 		request.setAttribute("ovm", ovm);
-		request.getRequestDispatcher("/WEB-INF/views/orderHistory.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/orderHistory.jsp").forward(request, response);
 	}
 
 	/**

@@ -17,6 +17,7 @@
 			<tr>
 				<th>商品名</th>
 				<th>オプション名</th>
+				<th>オプションid</th>
 				<th>価格</th>
 				<th>数量</th>
 				<th>小計</th>
@@ -25,6 +26,7 @@
 				<tr>
 					<td>${item.productName}</td>
 					<td>${item.optionName}</td>
+					<td>${item.optionId}</td>
 					<td>${item.productPrice + item.optionPrice}円</td>
 					<td>${item.quantity}</td>
 					<td>${(item.productPrice + item.optionPrice) * item.quantity}円</td>
@@ -41,7 +43,7 @@
 			<c:forEach var="item" items="${cvm}">
 				<input type="hidden" name="productId" value="${item.productId}" />
 				<input type="hidden" name="quantity" value="${item.quantity}" />
-				<input type="hidden" name="optionName" value="${item.optionid}" />
+				<input type="hidden" name="optionName" value="${item.optionId}" />
 			</c:forEach>
 			<input type="submit" value="注文を確定する">
 		</form>

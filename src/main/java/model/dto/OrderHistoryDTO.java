@@ -21,10 +21,10 @@ public class OrderHistoryDTO {
 	public void setProductQuantity(int productQuantity) {
 		this.productQuantity = productQuantity;
 	}
-	public String getPriductName() {
+	public String getProductName() {
 		return productName;
 	}
-	public void setPriductName(String productName) {
+	public void setProductName(String productName) {
 		this.productName = productName;
 	}
 	public String getStatusName() {
