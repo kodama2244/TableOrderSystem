@@ -129,4 +129,14 @@
     <servlet-name>OrderHistoryServlet</servlet-name>
     <url-pattern>/OrderHistoryServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>KitchenHallServlet</display-name>
+    <servlet-name>KitchenHallServlet</servlet-name>
+    <servlet-class>controller.KitchenHallServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>KitchenHallServlet</servlet-name>
+    <url-pattern>/KitchenHallServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

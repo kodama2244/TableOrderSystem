@@ -14,5 +14,7 @@
 <a href="MenuServlet">MenuServletから</a>
 <h1>メニュー管理画面(追加・削除・編集)</h1>
 <a href="MenuManagementServlet">MenuManagementServletから</a>
+<h1>キッチン・ホール画面</h1>
+<a href="KitchenHallServlet">KitchenHallServletから</a>
 </body>
 </html>

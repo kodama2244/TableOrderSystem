@@ -1,11 +1,30 @@
 package model.dto;
 
 public class OrderHistoryDTO {
+	private int orderHistoryId;
 	private int productQuantity;
 	private String productName;
 	private String statusName;
 	private String optionName;
 	private int productPrice;
+	private int tableNumber;
+	
+	
+	public int getTableNumber() {
+		return tableNumber;
+	}
+
+	public void setTableNumber(int tableNumber) {
+		this.tableNumber = tableNumber;
+	}
+
+	public int getOrderHistoryId() {
+		return orderHistoryId;
+	}
+
+	public void setOrderHistoryId(int orderHistoryId) {
+		this.orderHistoryId = orderHistoryId;
+	}
 
 	public int getProductPrice() {
 		return productPrice;

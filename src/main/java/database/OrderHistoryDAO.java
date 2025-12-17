@@ -70,7 +70,7 @@ public class OrderHistoryDAO {
 		DBManager manager = DBManager.getInstance();
 
 		try (Connection cn = manager.getConnection()) {
-			String sql ="SELECT\n"
+			String sql = "SELECT\n"
 					+ "    OH.QUANTITY AS productQuantity,\n"
 					+ "    P.PRODUCT_NAME AS productName,\n"
 					+ "    S.STATUS_NAME AS statusName,\n"
@@ -111,4 +111,78 @@ public class OrderHistoryDAO {
 
 		return list;
 	}
+
+	public List<OrderHistoryDTO> getOrderHistory() {
+		List<OrderHistoryDTO> list = new ArrayList<>();
+		DBManager manager = DBManager.getInstance();
+
+		try (Connection cn = manager.getConnection()) {
+			String sql = "SELECT\n"
+					+ "    OH.QUANTITY AS productQuantity,\n"
+					+ "	   OH.ORDER_HISTORY_ID AS orderHistoryId,\n"
+					+ "    P.PRODUCT_NAME AS productName,\n"
+					+ "    ORDS.TABLE_ID AS tableNumber,\n"
+					+ "    S.STATUS_NAME AS statusName,\n"
+					+ "    COALESCE(O.OPTION_NAME, 'オプションなし') AS optionName,\n"
+					+ "    P.PRODUCT_PRICE AS productPrice\n"
+					+ "FROM\n"
+					+ "    ORDERS ORDS\n"
+					+ "JOIN\n"
+					+ "    ORDER_HISTORY OH ON ORDS.ORDER_ID = OH.ORDER_ID\n"
+					+ "JOIN\n"
+					+ "    PRODUCT P ON OH.PRODUCT_ID = P.PRODUCT_ID\n"
+					+ "JOIN\n"
+					+ "    STATUS S ON OH.STATUS_ID = S.STATUS_ID\n"
+					+ "LEFT JOIN\n"
+					+ "    OPTIONS O ON OH.OPTION_ID = O.OPTION_ID\n"
+					+ "WHERE\n"
+					+ "    OH.STATUS_ID NOT IN (3, 4)"	;
+
+			try (PreparedStatement ps = cn.prepareStatement(sql)) {
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						OrderHistoryDTO dto = new OrderHistoryDTO();
+						dto.setTableNumber(rs.getInt("tableNumber"));
+						dto.setOrderHistoryId(rs.getInt("orderHistoryId"));
+						dto.setProductQuantity(rs.getInt("productQuantity"));
+						dto.setProductName(rs.getString("productName"));
+						dto.setStatusName(rs.getString("statusName"));
+						dto.setOptionName(rs.getString("optionName"));
+						dto.setProductPrice(rs.getInt("productPrice"));
+						list.add(dto);
+					}
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	public void changeStatus(int orderHistoryId, int status) {
+	    if (status != 2 && status != 3) {
+	        return;
+	    }
+
+	    DBManager manager = DBManager.getInstance();
+	    String sql = "UPDATE ORDER_HISTORY "
+	               + "SET STATUS_ID = ?, UPDATED_AT = SYSDATE "
+	               + "WHERE ORDER_HISTORY_ID = ?";
+
+	    try (Connection cn = manager.getConnection();
+	         PreparedStatement ps = cn.prepareStatement(sql)) {
+
+	        ps.setInt(1, status);          
+	        ps.setInt(2, orderHistoryId);  
+
+	        int count = ps.executeUpdate();
+	        System.out.println("更新件数: " + count);
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
 }
