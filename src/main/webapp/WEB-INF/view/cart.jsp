@@ -30,12 +30,13 @@
 					<td>${item.productPrice + item.optionPrice}円</td>
 					<td>${item.quantity}</td>
 					<td>${(item.productPrice + item.optionPrice) * item.quantity}円</td>
-					<td>
-						<form action="RemoveFromCartServlet" method="post">
+					
+						<!-- <form action="RemoveFromCartServlet" method="post">
 							<input type="hidden" name="productId" value="${item.productId}" />
 							<input type="hidden" name="optionName" value="${item.optionName}" />
 							<input type="submit" value="削除" />
-						</form></tr>
+						</form></tr> -->
+						</tr>	
 			</c:forEach>
 		</table>
 		<p>合計金額: ${totalAmount}円</p>

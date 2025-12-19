@@ -16,8 +16,7 @@ public class TableListServlet extends HttpServlet {
     private TableListService service = new TableListService();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 
         TableListViewModel vm = service.getTableList();
         
