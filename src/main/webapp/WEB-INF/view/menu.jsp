@@ -42,6 +42,9 @@ td img {
 	<form action="OrderHistoryServlet" method="get">
 		<button type="submit">注文履歴</button>
 	</form>
+	<form action="CheckoutServlet" method="get">
+		<button type="submit">お会計</button>
+	</form>
 	<h2>メニュー一覧</h2>
 	<form action="MenuServlet" method="get">
 		<table border="1">

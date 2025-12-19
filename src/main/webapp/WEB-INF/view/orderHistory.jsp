@@ -38,8 +38,8 @@
 	<form action="MenuServlet" method="get">
 		<button type="submit">メニューに戻る</button>
 	</form>
-	<form action="">
-	<button type="button">会計</button>
+	<form action="CheckoutServlet" method="get">
+		<button type="submit">お会計</button>
 	</form>
 </body>
 </html>
