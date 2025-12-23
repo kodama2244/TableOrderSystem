@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xmlns="https://jakarta.ee/xml/ns/jakartaee" 
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" 
-         version="6.0">
-
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" version="6.0">
   <display-name>G08_sobaya</display-name>
-
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
-
   <servlet>
     <servlet-name>MenuServlet</servlet-name>
     <servlet-class>controller.MenuServlet</servlet-class>
@@ -19,7 +13,6 @@
     <servlet-name>MenuServlet</servlet-name>
     <url-pattern>/MenuServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>SingleItemServlet</servlet-name>
     <servlet-class>controller.SingleItemServlet</servlet-class>
@@ -28,7 +21,6 @@
     <servlet-name>SingleItemServlet</servlet-name>
     <url-pattern>/SingleItemServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>TabletNumberServlet</servlet-name>
     <servlet-class>controller.TabletNumberServlet</servlet-class>
@@ -37,7 +29,6 @@
     <servlet-name>TabletNumberServlet</servlet-name>
     <url-pattern>/TabletNumberServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>WelcomServlet</servlet-name>
     <servlet-class>controller.WelcomServlet</servlet-class>
@@ -46,7 +37,6 @@
     <servlet-name>WelcomServlet</servlet-name>
     <url-pattern>/WelcomServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>CategoryServlet</servlet-name>
     <servlet-class>controller.CategoryServlet</servlet-class>
@@ -55,7 +45,6 @@
     <servlet-name>CategoryServlet</servlet-name>
     <url-pattern>/CategoryServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>NumberCustomersServlet</servlet-name>
     <servlet-class>controller.NumberCustomersServlet</servlet-class>
@@ -64,7 +53,6 @@
     <servlet-name>NumberCustomersServlet</servlet-name>
     <url-pattern>/NumberCustomersServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>CartServlet</servlet-name>
     <servlet-class>controller.CartServlet</servlet-class>
@@ -73,7 +61,6 @@
     <servlet-name>CartServlet</servlet-name>
     <url-pattern>/CartServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>OrderConfirmedServlet</servlet-name>
     <servlet-class>controller.OrderConfirmedServlet</servlet-class>
@@ -82,7 +69,6 @@
     <servlet-name>OrderConfirmedServlet</servlet-name>
     <url-pattern>/OrderConfirmedServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>ThankyouServlet</servlet-name>
     <servlet-class>controller.ThankyouServlet</servlet-class>
@@ -91,7 +77,6 @@
     <servlet-name>ThankyouServlet</servlet-name>
     <url-pattern>/ThankyouServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>MenuManagementServlet</servlet-name>
     <servlet-class>controller.MenuManagementServlet</servlet-class>
@@ -100,7 +85,6 @@
     <servlet-name>MenuManagementServlet</servlet-name>
     <url-pattern>/MenuManagementServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>EditProductServlet</servlet-name>
     <servlet-class>controller.EditProductServlet</servlet-class>
@@ -109,7 +93,6 @@
     <servlet-name>EditProductServlet</servlet-name>
     <url-pattern>/EditProductServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>OrderHistoryServlet</servlet-name>
     <servlet-class>controller.OrderHistoryServlet</servlet-class>
@@ -118,7 +101,6 @@
     <servlet-name>OrderHistoryServlet</servlet-name>
     <url-pattern>/OrderHistoryServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>KitchenHallServlet</servlet-name>
     <servlet-class>controller.KitchenHallServlet</servlet-class>
@@ -127,7 +109,6 @@
     <servlet-name>KitchenHallServlet</servlet-name>
     <url-pattern>/KitchenHallServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>CheckoutServlet</servlet-name>
     <servlet-class>controller.CheckoutServlet</servlet-class>
@@ -136,7 +117,6 @@
     <servlet-name>CheckoutServlet</servlet-name>
     <url-pattern>/CheckoutServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>PaymentServlet</servlet-name>
     <servlet-class>controller.PaymentServlet</servlet-class>
@@ -145,7 +125,6 @@
     <servlet-name>PaymentServlet</servlet-name>
     <url-pattern>/PaymentServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>TableBillServlet</servlet-name>
     <servlet-class>controller.TableBillServlet</servlet-class>
@@ -154,7 +133,6 @@
     <servlet-name>TableBillServlet</servlet-name>
     <url-pattern>/TableBillServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>TableListServlet</servlet-name>
     <servlet-class>controller.TableListServlet</servlet-class>
@@ -163,5 +141,14 @@
     <servlet-name>TableListServlet</servlet-name>
     <url-pattern>/TableListServlet</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+    <description></description>
+    <display-name>StoreSalesServlet</display-name>
+    <servlet-name>StoreSalesServlet</servlet-name>
+    <servlet-class>controller.StoreSalesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StoreSalesServlet</servlet-name>
+    <url-pattern>/StoreSalesServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
