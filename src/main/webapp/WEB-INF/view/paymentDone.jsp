@@ -13,6 +13,6 @@
     
     <h2>お釣り : ${ change }円</h2>
 
-    <button onclick="location.href='TableListServlet'">座席一覧へ戻る</button>
+<button onclick="location.href='${pageContext.request.contextPath}/TableListServlet'">座席一覧へ戻る</button>
   </body>
 </html>

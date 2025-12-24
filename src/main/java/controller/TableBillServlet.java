@@ -1,48 +1,33 @@
 package controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.dto.OrderDTO;
-import model.dto.TableInfoDTO;
-import model.service.OrderService;
+import model.service.TableBillService;
 import viewmodel.TableBillViewModel;
-
 
 public class TableBillServlet extends HttpServlet {
 
-    private OrderService service = new OrderService();
+    private TableBillService service = new TableBillService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         // 卓番号を取得
-        int tableNumber = Integer.parseInt(request.getParameter("tableNumber"));
+        String strTableNumber = request.getParameter("tableNumber");
+        int tableNumber = Integer.parseInt(strTableNumber);
 
-        // 注文一覧取得
-        List<OrderDTO> orders = service.getOrdersByTable(tableNumber);
-
-        // 合計金額などをまとめた情報を取得
-        TableInfoDTO info = service.getTableInfo(tableNumber, orders);
-
-        // ViewModel に詰める
-        TableBillViewModel vm = new TableBillViewModel();
-        vm.setTableNumber(info.getTableNumber());
-        vm.setTotalPrice(info.getTotalPrice());
-        vm.setOrderList(orders);
+        // ViewModelを作成
+        TableBillViewModel vm = service.createViewModel(tableNumber);
         
-        //確認用
-        System.out.println("tableNumber = " + tableNumber);
-        System.out.println("orders      = " + orders);
-        System.out.println("info        = " + info);
-        System.out.println("viewModel   = " + vm);     
-        System.out.println("==============================");
+        // 確認用ログ
+        System.out.println("卓番: " + vm.getTableNumber());
+        System.out.println("合計: " + vm.getTotalPrice());
 
         request.setAttribute("viewModel", vm);
 

@@ -25,7 +25,7 @@ public class CheckoutServlet extends HttpServlet {
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/checkout.jsp");
 		dispatcher.forward(request, response);
-	}
+	}	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -33,6 +33,8 @@ public class CheckoutServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
+		
+		
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/thankyou.jsp");
 		dispatcher.forward(request, response);

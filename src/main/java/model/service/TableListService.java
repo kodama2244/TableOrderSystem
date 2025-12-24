@@ -1,54 +1,27 @@
 package model.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import database.TableDAO;
 import model.dto.TableListDTO;
 import viewmodel.TableListViewModel;
 
 public class TableListService {
 
+    private TableDAO dao = new TableDAO();
+
     public TableListViewModel getTableList() {
 
         // ================================
-        // 元の仮データ（全席空き）
+        // データベースからリストを取得
         // ================================
-    		
-        /*
-        List<TableDTO> list = new ArrayList<>();
-        for (int i = 1; i <= 16; i++) {
-            TableDTO dto = new TableDTO();
-            dto.setTableNumber(i);
-            
-            dto.setHasCustomer(false);  // とりあえず全席空き
-            
-            list.add(dto);
-        }
-        */
-
-        // ================================
-        // 元の仮データ（1,16卓使用例）
-        // ================================
-    		
-        List<TableListDTO> list = new ArrayList<>();
+        List<TableListDTO> list = dao.getAllTables();
         
-        for (int i = 1; i <= 16; i++) {
-            TableListDTO dto = new TableListDTO();
-            dto.setTableNumber(i);
-
-            if (i == 1 || i == 16) {
-                dto.setHasCustomer(true);   // 使用中
-            } else {
-                dto.setHasCustomer(false);  // 空席
-            }
-            
-            //確認用
-            System.out.println("TableListDTO " + (i) + "卓 : " + dto.isHasCustomer());
-
-            list.add(dto);
+        // 確認用ログ
+        System.out.println("DBから取得した件数: " + list.size());
+        for(TableListDTO dto : list) {
+            System.out.println(dto.getTableNumber() + "卓: " + (dto.isHasCustomer() ? "利用中" : "空き"));
         }
-        
-        System.out.println("==============================");
 
         // ViewModel にセット
         TableListViewModel vm = new TableListViewModel();

@@ -9,7 +9,7 @@
 <body>
 	<h1>本日はご来店ありがとうございました</h1>
 	<p>バインダーをレジにお持ちください。</p>
-	<form action="NumberCustomersServlet" method="get">
+	<form action="welcom" method="get">
 		<button type="submit">初めから</button>
 	</form>
 </body>
