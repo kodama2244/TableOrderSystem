@@ -5,27 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>決済完了</title>
-    <style>
-        body { font-family: sans-serif; text-align: center; padding-top: 50px; }
-        .result-box { 
-            display: inline-block; 
-            padding: 30px; 
-            border: 2px solid #4CAF50; 
-            border-radius: 10px; 
-            background-color: #f9fff9;
-        }
-        .change-amount { font-size: 2em; color: #d32f2f; font-weight: bold; }
-        .btn-home { 
-            margin-top: 20px; 
-            padding: 10px 20px; 
-            background-color: #4CAF50; 
-            color: white; 
-            border: none; 
-            cursor: pointer; 
-            text-decoration: none;
-            display: inline-block;
-        }
-    </style>
+
 </head>
 <body>
 

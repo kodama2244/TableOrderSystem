@@ -184,5 +184,37 @@ public class OrderHistoryDAO {
 	        e.printStackTrace();
 	    }
 	}
+	public List<OrderHistoryDTO> getSalesByDate(String targetDate) {
+	    List<OrderHistoryDTO> list = new ArrayList<>();
+	    DBManager manager = DBManager.getInstance();
 
+	    // 会計済(status_id=4)のデータを日付で絞り込む
+	    String sql = "SELECT OH.QUANTITY, P.PRODUCT_NAME, P.PRODUCT_PRICE, "
+	               + "COALESCE(O.OPTION_NAME, 'なし') AS OPTION_NAME, "
+	               + "COALESCE(O.OPTION_PRICE, 0) AS OPTION_PRICE "
+	               + "FROM ORDER_HISTORY OH "
+	               + "JOIN PRODUCT P ON OH.PRODUCT_ID = P.PRODUCT_ID "
+	               + "LEFT JOIN OPTIONS O ON OH.OPTION_ID = O.OPTION_ID "
+	               + "WHERE OH.STATUS_ID = 4 "
+	               + "AND TO_CHAR(OH.UPDATED_AT, 'YYYY-MM-DD') = ?";
+
+	    try (Connection cn = manager.getConnection();
+	         PreparedStatement ps = cn.prepareStatement(sql)) {
+	        ps.setString(1, targetDate);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                OrderHistoryDTO dto = new OrderHistoryDTO();
+	                dto.setProductName(rs.getString("PRODUCT_NAME"));
+	                dto.setProductPrice(rs.getInt("PRODUCT_PRICE"));
+	                dto.setOptionName(rs.getString("OPTION_NAME"));
+	                dto.setOptionPrice(rs.getInt("OPTION_PRICE")); // DTOにこのフィールドがあると仮定
+	                dto.setProductQuantity(rs.getInt("QUANTITY"));
+	                list.add(dto);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
 }

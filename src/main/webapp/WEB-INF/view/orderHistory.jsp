@@ -35,6 +35,9 @@
 				</c:otherwise>
 			</c:choose>
 	</table>
+	<div class="total-area">
+		<h3>合計金額： ${totalAmount} 円</h3>
+	</div>
 	<form action="MenuServlet" method="get">
 		<button type="submit">メニューに戻る</button>
 	</form>

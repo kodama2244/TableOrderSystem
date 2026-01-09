@@ -21,8 +21,10 @@
 				<th>価格</th>
 				<th>数量</th>
 				<th>小計</th>
+				<th>操作</th>
 			</tr>
-			<c:forEach var="item" items="${cvm}">
+			<c:forEach var="item" items="${cvm}" varStatus="status">
+				<%-- varStatusを追加 --%>
 				<tr>
 					<td>${item.productName}</td>
 					<td>${item.optionName}</td>
@@ -30,13 +32,15 @@
 					<td>${item.productPrice + item.optionPrice}円</td>
 					<td>${item.quantity}</td>
 					<td>${(item.productPrice + item.optionPrice) * item.quantity}円</td>
-					
-						<!-- <form action="RemoveFromCartServlet" method="post">
-							<input type="hidden" name="productId" value="${item.productId}" />
-							<input type="hidden" name="optionName" value="${item.optionName}" />
-							<input type="submit" value="削除" />
-						</form></tr> -->
-						</tr>	
+					<td>
+						<form action="CartServlet" method="post">
+							<input type="hidden" name="action" value="delete">
+							<%-- status.indexで現在の行の番号を送信 --%>
+							<input type="hidden" name="index" value="${status.index}">
+							<button type="submit" class="delete-btn">削除</button>
+						</form>
+					</td>
+				</tr>
 			</c:forEach>
 		</table>
 		<p>合計金額: ${totalAmount}円</p>
@@ -49,8 +53,8 @@
 			<input type="submit" value="注文を確定する">
 		</form>
 	</c:if>
-			<form action="MenuServlet" method="get">
-			<button type="submit"name="category" value="${category}">メニュー一覧に戻る</button>
-		</form>
+	<form action="MenuServlet" method="get">
+		<button type="submit" name="category" value="${category}">メニュー一覧に戻る</button>
+	</form>
 </body>
 </html>

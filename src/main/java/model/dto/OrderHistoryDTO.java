@@ -6,10 +6,19 @@ public class OrderHistoryDTO {
 	private String productName;
 	private String statusName;
 	private String optionName;
+	private int optionPrice;
 	private int productPrice;
 	private int tableNumber;
 	
 	
+	public int getOptionPrice() {
+		return optionPrice;
+	}
+
+	public void setOptionPrice(int optionPrice) {
+		this.optionPrice = optionPrice;
+	}
+
 	public int getTableNumber() {
 		return tableNumber;
 	}
