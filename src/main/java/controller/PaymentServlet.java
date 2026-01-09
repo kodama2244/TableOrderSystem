@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,38 +14,37 @@ public class PaymentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // パラメータ取得
-        String tableNumberStr = request.getParameter("tableNumber");
-        String payAmountStr 	= request.getParameter("payAmount");
-        String totalAmountStr = request.getParameter("totalAmount");
+        try {
+            // 1. パラメータ取得
+            String tableNumberStr = request.getParameter("tableNumber");
+            String payAmountStr   = request.getParameter("payAmount");
+            String totalAmountStr = request.getParameter("totalAmount");
 
-        // null/空チェックしつつ変換
-        int tableNumber = (tableNumberStr == null || tableNumberStr.isEmpty())
-                ? 0 : Integer.parseInt(tableNumberStr);
-        int payAmount = (payAmountStr == null || payAmountStr.isEmpty())
-                ? 0 : Integer.parseInt(payAmountStr);
-        int totalAmount = (totalAmountStr == null || totalAmountStr.isEmpty())
-                ? 0 : Integer.parseInt(totalAmountStr);
-        int change = payAmount - totalAmount;
-        
-        // 確認用
-        System.out.println("tableNumber = " + tableNumber);
-        System.out.println("payAmount   = " + payAmount);
-        System.out.println("totalAmount = " + totalAmount);
-        System.out.println("change      = " + change );
-        System.out.println(tableNumber + "卓_会計完了");
-        System.out.println("==============================");
+            // 数値変換とバリデーション
+            if (tableNumberStr == null || payAmountStr == null || totalAmountStr == null) {
+                throw new IllegalArgumentException("必要なパラメータが不足しています。");
+            }
 
-        // 決済処理
-        PaymentService service = new PaymentService();
-        service.payBill(tableNumber, payAmount, totalAmount);
+            int tableNumber = Integer.parseInt(tableNumberStr);
+            int payAmount   = Integer.parseInt(payAmountStr);
+            int totalAmount = Integer.parseInt(totalAmountStr);
 
-        request.setAttribute("tableNumber", tableNumber);
-        request.setAttribute("payAmount", payAmount);
-        request.setAttribute("totalAmount", totalAmount);
-        request.setAttribute("change", payAmount - totalAmount);
+            // 2. 決済処理の実行（Service呼び出し）
+            PaymentService service = new PaymentService();
+            service.payBill(tableNumber, payAmount, totalAmount);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/paymentDone.jsp");
-        dispatcher.forward(request, response);
+            // 3. お釣りの計算
+            int change = payAmount - totalAmount;
+
+            // 4. 決済完了画面へフォワード（お釣りを渡す）
+            request.setAttribute("change", change);
+            request.getRequestDispatcher("/WEB-INF/view/paymentDone.jsp")
+                   .forward(request, response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // エラー時は安全に一覧へ戻す
+            response.sendRedirect(request.getContextPath() + "/TableListServlet");
+        }
     }
 }

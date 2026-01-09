@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,25 +11,43 @@ import viewmodel.TableBillViewModel;
 
 public class TableBillServlet extends HttpServlet {
 
-    private TableBillService service = new TableBillService();
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // 卓番号を取得
-        String strTableNumber = request.getParameter("tableNumber");
-        int tableNumber = Integer.parseInt(strTableNumber);
 
-        // ViewModelを作成
+        // ブラウザバック対策（キャッシュ無効化）
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+
+        String tableNumberStr = request.getParameter("tableNumber");
+        int tableNumber;
+
+        try {
+            // パラメータチェック
+            if (tableNumberStr == null || tableNumberStr.isEmpty()) {
+                throw new IllegalArgumentException("テーブル番号が指定されていません。");
+            }
+            tableNumber = Integer.parseInt(tableNumberStr);
+        } catch (Exception e) {
+            // 数値以外や空の場合は一覧へ戻す
+            response.sendRedirect(request.getContextPath() + "/TableListServlet");
+            return;
+        }
+
+        // Service呼び出し
+        TableBillService service = new TableBillService();
         TableBillViewModel vm = service.createViewModel(tableNumber);
-        
-        // 確認用ログ
-        System.out.println("卓番: " + vm.getTableNumber());
-        System.out.println("合計: " + vm.getTotalPrice());
 
-        request.setAttribute("viewModel", vm);
+        // 会計対象（注文）がない場合は一覧へ戻す
+        if (vm.getOrderList() == null || vm.getOrderList().isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/TableListServlet");
+            return;
+        }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/tableBill.jsp");
-        dispatcher.forward(request, response);
+        // JSPへ渡す
+        request.setAttribute("vm", vm);
+        request.getRequestDispatcher("/WEB-INF/view/tableBill.jsp")
+               .forward(request, response);
     }
 }

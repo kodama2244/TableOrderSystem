@@ -9,22 +9,24 @@ import viewmodel.TableBillViewModel;
 public class TableBillService {
 
     public TableBillViewModel createViewModel(int tableNumber) {
-
-        // 1. 注文一覧を取得
         OrderDAO dao = new OrderDAO();
+        
+        // 1. 指定テーブルの注文一覧を取得
         List<OrderDTO> orderList = dao.findByTableNumber(tableNumber);
 
-        // 2. 合計金額を計算
+        // 2. 合計金額を計算（ビジネスロジックはServiceの担当）
         int total = 0;
-        for (OrderDTO order : orderList) {
-            total += order.getPrice() * order.getStock();
+        if (orderList != null) {
+            for (OrderDTO order : orderList) {
+                total += order.getPrice() * order.getStock();
+            }
         }
 
-        // 3. ViewModel にセット
+        // 3. ViewModelの構築
         TableBillViewModel vm = new TableBillViewModel();
         vm.setTableNumber(tableNumber);
         vm.setOrderList(orderList);
-        vm.setTotalPrice(total); // ★ここを追加しました！
+        vm.setTotalPrice(total);
 
         return vm;
     }
