@@ -1,4 +1,4 @@
-package model.service;
+	package model.service;
 
 public class StoreSalesService {
 

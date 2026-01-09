@@ -16,5 +16,7 @@
 <a href="MenuManagementServlet">MenuManagementServletから</a>
 <h1>キッチン・ホール画面</h1>
 <a href="KitchenHallServlet">KitchenHallServletから</a>
+<h1>レジ画面</h1>
+<a href="TableListServlet">TableListServletから</a>
 </body>
 </html>

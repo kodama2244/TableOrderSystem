@@ -17,7 +17,6 @@ public class TableBillServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         // 卓番号を取得
         String strTableNumber = request.getParameter("tableNumber");
         int tableNumber = Integer.parseInt(strTableNumber);
