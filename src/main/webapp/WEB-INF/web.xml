@@ -151,4 +151,14 @@
     <servlet-name>StoreSalesServlet</servlet-name>
     <url-pattern>/StoreSalesServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminMenuServlet</display-name>
+    <servlet-name>AdminMenuServlet</servlet-name>
+    <servlet-class>controller.AdminMenuServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminMenuServlet</servlet-name>
+    <url-pattern>/AdminMenuServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

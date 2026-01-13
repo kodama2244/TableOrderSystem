@@ -8,14 +8,10 @@
 <title>sobaya</title>
 </head>
 <body>
-<h1>初めから</h1>
+<h1>お客様画面</h1>
 <a href="TabletNumberServlet">TabletNumberServletから</a>
-<h1>メニュー表示・カート追加</h1>
-<a href="MenuServlet">MenuServletから</a>
-<h1>メニュー管理画面(追加・削除・編集)</h1>
-<a href="MenuManagementServlet">MenuManagementServletから</a>
-<h1>店舗売上画面</h1>
-<a href="StoreSalesServlet">StoreSalesServletから</a>
+<h1>店舗画面</h1>
+<a href="AdminMenuServlet">AdminMenuServletから</a>
 <h1>キッチン・ホール画面</h1>
 <a href="KitchenHallServlet">KitchenHallServletから</a>
 <h1>レジ画面</h1>
