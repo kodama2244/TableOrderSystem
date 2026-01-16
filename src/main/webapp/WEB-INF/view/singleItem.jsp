@@ -28,11 +28,10 @@
         padding: 20px;
         box-sizing: border-box;
         display: grid;
-        grid-template-columns: 1.2fr 1fr; /* 画像エリアを少し広く */
+        grid-template-columns: 1.2fr 1fr;
         gap: 30px;
     }
 
-    /* --- 左側エリア（画像、価格、オプション、戻る） --- */
     .left-panel {
         display: flex;
         flex-direction: column;
@@ -40,9 +39,8 @@
         height: 100%;
     }
 
-    /* 商品画像エリア */
     .image-container {
-        flex: 1; /* 余ったスペースを全て使う */
+        flex: 1;
         background-color: #e0e0e0;
         border-radius: 10px;
         display: flex;
@@ -57,7 +55,6 @@
         object-fit: contain;
     }
 
-    /* 価格表示ボックス */
     .price-box {
         border: 2px solid #333;
         padding: 15px;
@@ -71,17 +68,28 @@
     .options-wrapper {
         display: flex;
         gap: 10px;
+        min-height: 80px;
     }
     
     .option-card {
-        background-color: #444;
-        color: white;
+        background-color: #eee;
+        color: #333;
+        border: 2px solid #333;
         padding: 10px;
         border-radius: 5px;
         text-align: center;
         flex: 1;
-        font-size: 14px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.2s;
     }
+
+    /* 選択された時のスタイル */
+    .option-card.selected {
+        background-color: #444;
+        color: white;
+    }
+
     .option-price {
         background-color: white;
         color: #333;
@@ -89,9 +97,9 @@
         padding: 2px;
         border-radius: 3px;
         font-weight: bold;
+        font-size: 14px;
     }
 
-    /* 戻るボタン */
     .back-btn {
         background-color: #444;
         color: white;
@@ -104,14 +112,12 @@
         width: 100%;
     }
 
-    /* --- 右側エリア（商品名、説明、数量、カート） --- */
     .right-panel {
         display: flex;
         flex-direction: column;
         gap: 20px;
     }
 
-    /* 商品名 */
     .product-title {
         border: 2px solid #333;
         padding: 20px;
@@ -121,22 +127,20 @@
         border-radius: 5px;
     }
 
-    /* 商品説明ボックス */
     .description-box {
         border: 2px solid #333;
         padding: 20px;
         font-size: 16px;
         line-height: 1.6;
         border-radius: 5px;
-        flex-grow: 1; /* 縦に伸ばす */
+        flex-grow: 1;
         overflow-y: auto;
     }
 
-    /* 数量選択エリア */
     .quantity-control {
         display: flex;
         align-items: center;
-        justify-content: flex-end; /* 右寄せ */
+        justify-content: flex-end;
         gap: 10px;
     }
 
@@ -154,7 +158,6 @@
         align-items: center;
     }
 
-    /* 数量表示（inputタグだが読み取り専用） */
     .qty-input {
         width: 80px;
         height: 60px;
@@ -164,7 +167,6 @@
         border-radius: 5px;
     }
 
-    /* カートに入れるボタン */
     .cart-btn {
         background-color: #444;
         color: white;
@@ -182,12 +184,10 @@
         transform: scale(0.98);
     }
     
-    /* エラーメッセージ等 */
     .msg-area {
         color: red;
         text-align: center;
     }
-
 </style>
 </head>
 <body>
@@ -204,11 +204,14 @@
         </div>
 
         <div class="options-wrapper">
-            <div class="option-card">
-                <div>${sivm.optionName}</div>
-                <div class="option-price">+${sivm.optionPrice}円</div>
-            </div>
-            </div>
+            <%-- 大盛オプション(ID:1)がある場合のみ選択パネルを表示 --%>
+            <c:if test="${sivm.optionId == 1}">
+                <div id="optionPanel" class="option-card" onclick="toggleOption()">
+                    <div><strong>${sivm.optionName}</strong>にする</div>
+                    <div class="option-price">+${sivm.optionPrice}円</div>
+                </div>
+            </c:if>
+        </div>
 
         <button type="button" class="back-btn" onclick="history.back()">戻る</button>
     </div>
@@ -236,13 +239,16 @@
                 <button type="button" class="qty-btn" onclick="changeQty(1)">→</button>
             </div>
 
+            <%-- カートに送る基本情報 --%>
             <input type="hidden" name="productId" value="${sivm.productId}">
             <input type="hidden" name="productName" value="${sivm.productName}"> 
             <input type="hidden" name="productPrice" value="${sivm.productPrice}">
-            <input type="hidden" name="optionName" value="${sivm.optionName}">
-            <input type="hidden" name="optionPrice" value="${sivm.optionPrice}">
             <input type="hidden" name="category" value="${category}">
-            <input type="hidden" name="optionId" value="${sivm.optionId}">
+
+            <%-- オプション情報（初期値は「なし」の0） --%>
+            <input type="hidden" name="optionId" id="h_optionId" value="0">
+            <input type="hidden" name="optionName" id="h_optionName" value="">
+            <input type="hidden" name="optionPrice" id="h_optionPrice" value="0">
 
             <input type="submit" value="カートに入れる" class="cart-btn">
         </form>
@@ -255,13 +261,35 @@
 </div>
 
 <script>
-    // 数量を変更する関数
+    let isOptionSelected = false;
+
+    // オプションの選択状態を切り替える関数
+    function toggleOption() {
+        const panel = document.getElementById("optionPanel");
+        const hId = document.getElementById("h_optionId");
+        const hName = document.getElementById("h_optionName");
+        const hPrice = document.getElementById("h_optionPrice");
+
+        isOptionSelected = !isOptionSelected;
+
+        if (isOptionSelected) {
+            panel.classList.add("selected");
+            hId.value = "${sivm.optionId}";
+            hName.value = "${sivm.optionName}";
+            hPrice.value = "${sivm.optionPrice}";
+        } else {
+            panel.classList.remove("selected");
+            hId.value = "0";
+            hName.value = "";
+            hPrice.value = "0";
+        }
+    }
+
     function changeQty(amount) {
         var qtyInput = document.getElementById("quantityInput");
         var currentQty = parseInt(qtyInput.value);
         var newQty = currentQty + amount;
 
-        // 最小値は1、最大値は（仮で）10に設定
         if (newQty >= 1 && newQty <= 10) {
             qtyInput.value = newQty;
         }

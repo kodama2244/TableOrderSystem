@@ -24,11 +24,12 @@ public class CartServlet extends HttpServlet {
 	/**
 	 * カート画面の表示処理
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// メニュー画面に戻る際などに必要なカテゴリ情報を保持
 		String category = request.getParameter("category");
 		request.setAttribute("category", category);
-		
+
 		// カート画面（cart.jsp）へフォワード
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/cart.jsp");
 		dispatcher.forward(request, response);
@@ -37,10 +38,11 @@ public class CartServlet extends HttpServlet {
 	/**
 	 * カートへの追加、およびカートからの削除処理
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		
+
 		// アクションの判定（追加 or 削除）
 		String action = request.getParameter("action");
 		// セッションから現在のカートを取得（なければ新規作成）
@@ -100,13 +102,13 @@ public class CartServlet extends HttpServlet {
 			String category = request.getParameter("category");
 			MenuService ms = new MenuService();
 			List<ProductOptionDTO> products = ms.getProducts(category);
-			
+
 			MenuViewModel mvm = new MenuViewModel();
 			mvm.setProducts(products);
-			
+
 			request.setAttribute("mvm", mvm);
 			request.setAttribute("category", category);
-			
+
 			// メニュー画面へ戻る（または設計に合わせてカートへ飛ばす）
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/menu.jsp");
 			dispatcher.forward(request, response);

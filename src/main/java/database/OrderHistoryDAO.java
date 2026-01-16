@@ -65,53 +65,57 @@ public class OrderHistoryDAO {
 		}
 	}
 
+	// --- ① テーブル番号指定の履歴取得（合算版） ---
 	public List<OrderHistoryDTO> getOrderHistory(int tableNumber) {
-		List<OrderHistoryDTO> list = new ArrayList<>();
-		DBManager manager = DBManager.getInstance();
+	    List<OrderHistoryDTO> list = new ArrayList<>();
+	    DBManager manager = DBManager.getInstance();
 
-		try (Connection cn = manager.getConnection()) {
-			String sql = "SELECT\n"
-					+ "    OH.QUANTITY AS productQuantity,\n"
-					+ "    P.PRODUCT_NAME AS productName,\n"
-					+ "    S.STATUS_NAME AS statusName,\n"
-					+ "    COALESCE(O.OPTION_NAME, 'オプションなし') AS optionName,\n"
-					+ "    P.PRODUCT_PRICE AS productPrice\n"
-					+ "FROM\n"
-					+ "    ORDERS ORDS\n"
-					+ "JOIN\n"
-					+ "    ORDER_HISTORY OH ON ORDS.ORDER_ID = OH.ORDER_ID\n"
-					+ "JOIN\n"
-					+ "    PRODUCT P ON OH.PRODUCT_ID = P.PRODUCT_ID\n"
-					+ "JOIN\n"
-					+ "    STATUS S ON OH.STATUS_ID = S.STATUS_ID\n"
-					+ "LEFT JOIN\n"
-					+ "    OPTIONS O ON OH.OPTION_ID = O.OPTION_ID\n"
-					+ "WHERE\n"
-					+ "    ORDS.TABLE_ID = ?\n"
-					+ "    AND OH.STATUS_ID != 4";
+	    try (Connection cn = manager.getConnection()) {
+	        String sql = "SELECT\n"
+	                + "    OH.QUANTITY AS productQuantity,\n"
+	                + "    P.PRODUCT_NAME AS productName,\n"
+	                + "    S.STATUS_NAME AS statusName,\n"
+	                + "    COALESCE(O.OPTION_NAME, 'なし') AS optionName,\n"
+	                + "    COALESCE(O.OPTION_PRICE, 0) AS optionPrice,\n" // ★オプション価格を取得
+	                + "    P.PRODUCT_PRICE AS productPrice\n"
+	                + "FROM\n"
+	                + "    ORDERS ORDS\n"
+	                + "JOIN\n"
+	                + "    ORDER_HISTORY OH ON ORDS.ORDER_ID = OH.ORDER_ID\n"
+	                + "JOIN\n"
+	                + "    PRODUCT P ON OH.PRODUCT_ID = P.PRODUCT_ID\n"
+	                + "JOIN\n"
+	                + "    STATUS S ON OH.STATUS_ID = S.STATUS_ID\n"
+	                + "LEFT JOIN\n"
+	                + "    OPTIONS O ON OH.OPTION_ID = O.OPTION_ID\n"
+	                + "WHERE\n"
+	                + "    ORDS.TABLE_ID = ?\n"
+	                + "    AND OH.STATUS_ID != 4";
 
-			try (PreparedStatement ps = cn.prepareStatement(sql)) {
-				ps.setInt(1, tableNumber); // 1番目の ? に値をセット
-				try (ResultSet rs = ps.executeQuery()) {
-					while (rs.next()) {
-						OrderHistoryDTO dto = new OrderHistoryDTO();
-						dto.setProductQuantity(rs.getInt("productQuantity"));
-						dto.setProductName(rs.getString("productName"));
-						dto.setStatusName(rs.getString("statusName"));
-						dto.setOptionName(rs.getString("optionName"));
-						dto.setProductPrice(rs.getInt("productPrice"));
-						list.add(dto);
-					}
-				}
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return list;
+	        try (PreparedStatement ps = cn.prepareStatement(sql)) {
+	            ps.setInt(1, tableNumber);
+	            try (ResultSet rs = ps.executeQuery()) {
+	                while (rs.next()) {
+	                    OrderHistoryDTO dto = new OrderHistoryDTO();
+	                    // 各フィールドに個別にセット
+	                    dto.setProductQuantity(rs.getInt("productQuantity"));
+	                    dto.setProductName(rs.getString("productName"));
+	                    dto.setStatusName(rs.getString("statusName"));
+	                    dto.setOptionName(rs.getString("optionName"));
+	                    dto.setOptionPrice(rs.getInt("optionPrice")); // ★DTOの新しいフィールドへ
+	                    dto.setProductPrice(rs.getInt("productPrice"));
+	                    
+	                    list.add(dto);
+	                }
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return list;
 	}
 
+	// --- ② 全体の注文履歴取得（合算版） ---
 	public List<OrderHistoryDTO> getOrderHistory() {
 		List<OrderHistoryDTO> list = new ArrayList<>();
 		DBManager manager = DBManager.getInstance();
@@ -119,12 +123,12 @@ public class OrderHistoryDAO {
 		try (Connection cn = manager.getConnection()) {
 			String sql = "SELECT\n"
 					+ "    OH.QUANTITY AS productQuantity,\n"
-					+ "	   OH.ORDER_HISTORY_ID AS orderHistoryId,\n"
+					+ "    OH.ORDER_HISTORY_ID AS orderHistoryId,\n"
 					+ "    P.PRODUCT_NAME AS productName,\n"
 					+ "    ORDS.TABLE_ID AS tableNumber,\n"
 					+ "    S.STATUS_NAME AS statusName,\n"
 					+ "    COALESCE(O.OPTION_NAME, 'オプションなし') AS optionName,\n"
-					+ "    P.PRODUCT_PRICE AS productPrice\n"
+					+ "    (P.PRODUCT_PRICE + COALESCE(O.OPTION_PRICE, 0)) AS totalPriceWithOption\n" // ★SQLで合算
 					+ "FROM\n"
 					+ "    ORDERS ORDS\n"
 					+ "JOIN\n"
@@ -136,7 +140,7 @@ public class OrderHistoryDAO {
 					+ "LEFT JOIN\n"
 					+ "    OPTIONS O ON OH.OPTION_ID = O.OPTION_ID\n"
 					+ "WHERE\n"
-					+ "    OH.STATUS_ID NOT IN (3, 4)"	;
+					+ "    OH.STATUS_ID NOT IN (3, 4)";
 
 			try (PreparedStatement ps = cn.prepareStatement(sql)) {
 				try (ResultSet rs = ps.executeQuery()) {
@@ -145,76 +149,83 @@ public class OrderHistoryDAO {
 						dto.setTableNumber(rs.getInt("tableNumber"));
 						dto.setOrderHistoryId(rs.getInt("orderHistoryId"));
 						dto.setProductQuantity(rs.getInt("productQuantity"));
-						dto.setProductName(rs.getString("productName"));
+
+						String name = rs.getString("productName");
+						String optName = rs.getString("optionName");
+						if (!optName.equals("オプションなし")) {
+							name += " (" + optName + ")";
+						}
+						dto.setProductName(name);
+
 						dto.setStatusName(rs.getString("statusName"));
-						dto.setOptionName(rs.getString("optionName"));
-						dto.setProductPrice(rs.getInt("productPrice"));
+						// ★ここでも合算価格をセット
+						dto.setProductPrice(rs.getInt("totalPriceWithOption"));
+
 						list.add(dto);
 					}
 				}
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return list;
 	}
 
 	public void changeStatus(int orderHistoryId, int status) {
-	    if (status != 2 && status != 3) {
-	        return;
-	    }
+		if (status != 2 && status != 3) {
+			return;
+		}
 
-	    DBManager manager = DBManager.getInstance();
-	    String sql = "UPDATE ORDER_HISTORY "
-	               + "SET STATUS_ID = ?, UPDATED_AT = SYSDATE "
-	               + "WHERE ORDER_HISTORY_ID = ?";
+		DBManager manager = DBManager.getInstance();
+		String sql = "UPDATE ORDER_HISTORY "
+				+ "SET STATUS_ID = ?, UPDATED_AT = SYSDATE "
+				+ "WHERE ORDER_HISTORY_ID = ?";
 
-	    try (Connection cn = manager.getConnection();
-	         PreparedStatement ps = cn.prepareStatement(sql)) {
+		try (Connection cn = manager.getConnection();
+				PreparedStatement ps = cn.prepareStatement(sql)) {
 
-	        ps.setInt(1, status);          
-	        ps.setInt(2, orderHistoryId);  
+			ps.setInt(1, status);
+			ps.setInt(2, orderHistoryId);
 
-	        int count = ps.executeUpdate();
-	        System.out.println("更新件数: " + count);
+			int count = ps.executeUpdate();
+			System.out.println("更新件数: " + count);
 
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
+
 	public List<OrderHistoryDTO> getSalesByDate(String targetDate) {
-	    List<OrderHistoryDTO> list = new ArrayList<>();
-	    DBManager manager = DBManager.getInstance();
+		List<OrderHistoryDTO> list = new ArrayList<>();
+		DBManager manager = DBManager.getInstance();
 
-	    // 会計済(status_id=4)のデータを日付で絞り込む
-	    String sql = "SELECT OH.QUANTITY, P.PRODUCT_NAME, P.PRODUCT_PRICE, "
-	               + "COALESCE(O.OPTION_NAME, 'なし') AS OPTION_NAME, "
-	               + "COALESCE(O.OPTION_PRICE, 0) AS OPTION_PRICE "
-	               + "FROM ORDER_HISTORY OH "
-	               + "JOIN PRODUCT P ON OH.PRODUCT_ID = P.PRODUCT_ID "
-	               + "LEFT JOIN OPTIONS O ON OH.OPTION_ID = O.OPTION_ID "
-	               + "WHERE OH.STATUS_ID = 4 "
-	               + "AND TO_CHAR(OH.UPDATED_AT, 'YYYY-MM-DD') = ?";
+		// 会計済(status_id=4)のデータを日付で絞り込む
+		String sql = "SELECT OH.QUANTITY, P.PRODUCT_NAME, P.PRODUCT_PRICE, "
+				+ "COALESCE(O.OPTION_NAME, 'なし') AS OPTION_NAME, "
+				+ "COALESCE(O.OPTION_PRICE, 0) AS OPTION_PRICE "
+				+ "FROM ORDER_HISTORY OH "
+				+ "JOIN PRODUCT P ON OH.PRODUCT_ID = P.PRODUCT_ID "
+				+ "LEFT JOIN OPTIONS O ON OH.OPTION_ID = O.OPTION_ID "
+				+ "WHERE OH.STATUS_ID = 4 "
+				+ "AND TO_CHAR(OH.UPDATED_AT, 'YYYY-MM-DD') = ?";
 
-	    try (Connection cn = manager.getConnection();
-	         PreparedStatement ps = cn.prepareStatement(sql)) {
-	        ps.setString(1, targetDate);
-	        try (ResultSet rs = ps.executeQuery()) {
-	            while (rs.next()) {
-	                OrderHistoryDTO dto = new OrderHistoryDTO();
-	                dto.setProductName(rs.getString("PRODUCT_NAME"));
-	                dto.setProductPrice(rs.getInt("PRODUCT_PRICE"));
-	                dto.setOptionName(rs.getString("OPTION_NAME"));
-	                dto.setOptionPrice(rs.getInt("OPTION_PRICE")); // DTOにこのフィールドがあると仮定
-	                dto.setProductQuantity(rs.getInt("QUANTITY"));
-	                list.add(dto);
-	            }
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return list;
+		try (Connection cn = manager.getConnection();
+				PreparedStatement ps = cn.prepareStatement(sql)) {
+			ps.setString(1, targetDate);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					OrderHistoryDTO dto = new OrderHistoryDTO();
+					dto.setProductName(rs.getString("PRODUCT_NAME"));
+					dto.setProductPrice(rs.getInt("PRODUCT_PRICE"));
+					dto.setOptionName(rs.getString("OPTION_NAME"));
+					dto.setOptionPrice(rs.getInt("OPTION_PRICE")); // DTOにこのフィールドがあると仮定
+					dto.setProductQuantity(rs.getInt("QUANTITY"));
+					list.add(dto);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

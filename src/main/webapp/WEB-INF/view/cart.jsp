@@ -204,7 +204,7 @@
                 <c:forEach var="item" items="${cvm}">
                     <input type="hidden" name="productId" value="${item.productId}" />
                     <input type="hidden" name="quantity" value="${item.quantity}" />
-                    <input type="hidden" name="optionName" value="${item.optionId}" />
+                    <input type="hidden" name="optionId" value="${item.optionId}" />
                 </c:forEach>
                 <button type="submit" class="action-btn btn-confirm">注文確定</button>
             </form>

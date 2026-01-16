@@ -20,12 +20,11 @@ public class OrderHistoryServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        // 1. セッションから卓番号を取得（安全な変換を追加）
+        // 1. セッションから卓番号を取得
         HttpSession session = request.getSession();
         Object tableObj = session.getAttribute("tableNumber");
         
         if (tableObj == null) {
-            // セッション切れの場合は入店画面へリダイレクト等の対策
             response.sendRedirect("welcom");
             return;
         }
@@ -36,12 +35,12 @@ public class OrderHistoryServlet extends HttpServlet {
         OrderHistoryService ohs = new OrderHistoryService();
         List<OrderHistoryDTO> history = ohs.getOrderHistory(tableNumber);
         
-        // 3. ★追加：合計金額を計算する
+        // 3. 合計金額を計算（オプション価格を加算）
         int totalAmount = 0;
         if (history != null) {
             for (OrderHistoryDTO dto : history) {
-                // 単価 × 数量 を加算
-                totalAmount += dto.getProductPrice() * dto.getProductQuantity();
+                // (商品単価 + オプション単価) × 数量
+                totalAmount += (dto.getProductPrice() + dto.getOptionPrice()) * dto.getProductQuantity();
             }
         }
         
@@ -51,7 +50,7 @@ public class OrderHistoryServlet extends HttpServlet {
         
         // 5. データをリクエストスコープにセット
         request.setAttribute("ovm", ovm);
-        request.setAttribute("totalAmount", totalAmount); // ★合計金額を渡す
+        request.setAttribute("totalAmount", totalAmount); 
         
         request.getRequestDispatcher("/WEB-INF/view/orderHistory.jsp").forward(request, response);
     }
