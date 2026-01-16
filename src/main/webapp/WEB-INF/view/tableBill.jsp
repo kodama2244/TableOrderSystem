@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
@@ -7,266 +6,264 @@
 <meta charset="UTF-8">
 <title>レジ会計画面</title>
 <style>
+/* --- 全体の基本設定 --- */
 body {
-	margin: 0;
-	padding: 0;
-	font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-	background-color: #f4f4f4;
-	height: 100vh;
-	display: flex;
-	flex-direction: column;
-	overflow: hidden;
+    margin: 0;
+    padding: 20px 40px;
+    font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    background-color: #f2ede4; /* ベージュ背景 */
+    color: #5d5046; /* 茶系の文字色 */
 }
 
 header {
-	background-color: #333;
-	color: white;
-	padding: 10px 30px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
+h1 {
+    font-size: 28px;
+    border-left: 8px solid #5d5046;
+    padding-left: 15px;
+    margin: 0;
+}
+
+/* --- テーブルエリア --- */
 .order-history-area {
-	flex-grow: 1;
-	overflow-y: auto;
-	padding: 20px 40px;
-	background-color: #fff;
-	margin: 10px 20px;
-	border: 1px solid #ccc;
-	border-radius: 8px;
+    margin-bottom: 15px;
 }
 
 .order-table {
-	width: 100%;
-	border-collapse: collapse;
-	font-size: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
 }
 
 .order-table th {
-	position: sticky;
-	top: 0;
-	background: #eee;
-	padding: 15px;
-	border-bottom: 2px solid #333;
+    background-color: #6b5443; /* 茶色ヘッダー */
+    color: white;
+    padding: 12px;
+    border: 1px solid #dcd3c7;
+    font-weight: normal;
 }
 
 .order-table td {
-	padding: 18px 15px;
-	border-bottom: 1px solid #eee;
+    padding: 12px;
+    border: 1px solid #dcd3c7;
+    text-align: center;
 }
 
-.price-col {
-	text-align: right;
-	font-weight: bold;
-	width: 150px;
+.price-col, .subtotal-col { text-align: right !important; }
+
+/* 中止ボタン */
+.btn-cancel {
+    background-color: #9e4343;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 30px;
 }
 
-.qty-col {
-	text-align: center;
-	width: 100px;
+/* --- 会計操作エリア --- */
+.payment-section {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
 }
 
-.subtotal-col {
-	text-align: right;
-	color: #666;
-	width: 180px;
+/* テンキー */
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    background: white;
+    padding: 15px;
+    border: 1px solid #dcd3c7;
+    width: 240px;
+}
+.key {
+    background: #6b5443;
+    color: white;
+    border: none;
+    padding: 20px;
+    font-size: 24px;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+}
+.key:active {
+    background: #4a3a2e;
+    transform: scale(0.95);
 }
 
-.payment-footer {
-	background: #e9e9e9;
-	padding: 20px 40px;
-	flex-shrink: 0;
-	box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.05);
+/* 計算ボックス */
+.calc-container {
+    background-color: #e6dec9;
+    padding: 30px;
+    border: 1px solid #5d5046;
+    flex-grow: 1;
+    max-width: 500px;
 }
 
-.calc-grid {
-	display: grid;
-	grid-template-columns: 1.2fr 1fr;
-	gap: 40px;
-	align-items: center;
-}
-
-.amount-inputs {
-	display: flex;
-	align-items: center;
-	gap: 30px;
-}
-
-.total-box {
-	background: #333;
-	color: white;
-	padding: 15px 25px;
-	border-radius: 5px;
-	min-width: 250px;
-}
-
-.total-box label {
-	font-size: 16px;
-	display: block;
-	margin-bottom: 5px;
-}
-
-.total-val {
-	font-size: 36px;
-	font-weight: bold;
-	display: block;
-	text-align: right;
-}
-
-.pay-box label {
-	font-size: 18px;
-	font-weight: bold;
-	display: block;
-	margin-bottom: 5px;
+.calc-row {
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
 .pay-input {
-	font-size: 32px;
-	padding: 8px;
-	width: 200px;
-	text-align: right;
-	border: 2px solid #999;
-	border-radius: 5px;
-}
-
-.action-area {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
-	gap: 15px;
-}
-
-.change-display {
-	font-size: 28px;
-	font-weight: bold;
-}
-
-.change-val {
-	font-size: 40px;
-	color: #4A90E2;
-	margin-left: 10px;
-}
-
-.btn-group {
-	display: flex;
-	gap: 15px;
-}
-
-.btn {
-	height: 70px;
-	width: 200px;
-	font-size: 22px;
-	font-weight: bold;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-	color: white;
-}
-
-.btn-back {
-	background-color: #888;
+    font-size: 28px;
+    padding: 10px;
+    width: 100%;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    text-align: right;
+    box-sizing: border-box;
 }
 
 .btn-submit {
-	background-color: #2c3e50;
+    background-color: #6b5443;
+    color: white;
+    border: none;
+    width: 150px;
+    padding: 15px;
+    font-size: 22px;
+    cursor: pointer;
+    margin-top: 15px;
+    border-radius: 4px;
 }
 
-.btn:active {
-	transform: scale(0.97);
-	opacity: 0.9;
+.change-display {
+    margin-top: 30px;
+    font-size: 26px;
+    font-weight: bold;
 }
 </style>
 </head>
 <body>
 
-	<header>
-		<h1>テーブル番号: ${vm.tableNumber} 会計明細</h1>
-	</header>
+    <header>
+        <h1>テーブル ${vm.tableNumber} の会計</h1>
+        <div>2026/01/16 (金) 11:21:07</div>
+    </header>
 
-	<div class="order-history-area">
-		<table class="order-table">
-			<thead>
-				<tr>
-					<th style="text-align: left;">商品名</th>
-					<th class="price-col">単価</th>
-					<th class="qty-col">数量</th>
-					<th class="subtotal-col">小計</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="item" items="${vm.orderList}">
-					<tr>
-						<%-- DAO側ですでに「商品名 (オプション名)」になっているため、そのまま表示 --%>
-						<td>${item.orderName}</td>
+    <div class="order-history-area">
+        <table class="order-table">
+            <thead>
+                <tr>
+                    <th>商品名</th>
+                    <th>数量</th>
+                    <th class="price-col">単価</th>
+                    <th class="subtotal-col">小計</th>
+                    <th>状態</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="item" items="${vm.orderList}">
+                    <tr>
+                        <td>${item.orderName}</td>
+                        <td>${item.stock}</td>
+                        <td class="price-col">${item.price}</td>
+                        <td class="subtotal-col">${item.price * item.stock}</td>
+                        <td>提供済み</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
 
-						<%-- DAO側ですでに「本体 + オプション」の価格になっているため、そのまま表示 --%>
-						<td class="price-col">${item.price}円</td>
+    <button type="button" class="btn-cancel" onclick="confirmCancel()">お会計を中止する</button>
 
-						<td class="qty-col">${item.stock}</td>
+    <div class="payment-section">
+        <div class="keypad">
+            <button type="button" class="key" onclick="pressKey('7')">7</button>
+            <button type="button" class="key" onclick="pressKey('8')">8</button>
+            <button type="button" class="key" onclick="pressKey('9')">9</button>
+            <button type="button" class="key" onclick="pressKey('4')">4</button>
+            <button type="button" class="key" onclick="pressKey('5')">5</button>
+            <button type="button" class="key" onclick="pressKey('6')">6</button>
+            <button type="button" class="key" onclick="pressKey('1')">1</button>
+            <button type="button" class="key" onclick="pressKey('2')">2</button>
+            <button type="button" class="key" onclick="pressKey('3')">3</button>
+            <button type="button" class="key" onclick="pressKey('0')">0</button>
+            <button type="button" class="key" style="grid-column: span 2;" onclick="pressKey('C')">C</button>
+        </div>
 
-						<%-- 小計計算 --%>
-						<td class="subtotal-col">${item.price * item.stock}円</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</div>
+        <div class="calc-container">
+            <form id="paymentForm" action="${pageContext.request.contextPath}/PaymentServlet" method="post" onsubmit="return validatePayment()">
+                <input type="hidden" name="tableNumber" value="${vm.tableNumber}">
+                <input type="hidden" name="totalAmount" value="${vm.totalPrice}">
 
-	<div class="payment-footer">
-		<form action="${pageContext.request.contextPath}/PaymentServlet"
-			method="post">
-			<input type="hidden" name="tableNumber" value="${vm.tableNumber}">
-			<input type="hidden" name="totalAmount" value="${vm.totalPrice}">
+                <div class="calc-row">合計金額： ${vm.totalPrice} 円</div>
+                
+                <div class="calc-row">
+                    支払金額：<br>
+                    <input type="number" name="payAmount" id="payAmount" class="pay-input" 
+                           required readonly oninput="calcChange()">
+                </div>
 
-			<div class="calc-grid">
-				<div class="amount-inputs">
-					<div class="total-box">
-						<label>請求合計金額</label>
-						<%-- Service側で計算された「大盛分込み」の合計金額を表示 --%>
-						<span class="total-val">${vm.totalPrice} <small>円</small></span>
-					</div>
+                <button type="submit" class="btn-submit">会計</button>
 
-					<div class="pay-box">
-						<label>お預かり金額</label> 
-						<input type="number" name="payAmount" id="payAmount" class="pay-input" 
-						       required min="${vm.totalPrice}" oninput="calcChange()">
-					</div>
-				</div>
+                <div class="change-display">
+                    お釣り： <span id="changeResult">0</span> 円
+                </div>
+            </form>
+        </div>
+    </div>
 
-				<div class="action-area">
-					<div class="change-display">
-						お釣り: <span id="changeResult" class="change-val">0</span> <small>円</small>
-					</div>
+    <script>
+        // テンキー入力制御
+        function pressKey(value) {
+            const input = document.getElementById('payAmount');
+            if (value === 'C') {
+                input.value = "";
+            } else {
+                // 先頭が0にならないように制御
+                if (input.value === "0") input.value = "";
+                input.value += value;
+            }
+            calcChange(); // お釣り計算を走らせる
+        }
 
-					<div class="btn-group">
-						<button type="button" class="btn btn-back"
-							onclick="location.href='${pageContext.request.contextPath}/TableListServlet'">中止</button>
-						<button type="submit" class="btn btn-submit">会計確定</button>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
+        // 金額不足時のポップアップ
+        function validatePayment() {
+            const total = parseInt("${vm.totalPrice}");
+            const pay = parseInt(document.getElementById('payAmount').value) || 0;
+            
+            if (pay < total) {
+                alert("お預かり金額が不足しています。");
+                return false; 
+            }
+            return true; 
+        }
 
-	<script>
-		function calcChange() {
-			// 合計金額（vm.totalPrice）を取得
-			const total = parseInt("${vm.totalPrice}");
-			const pay = parseInt(document.getElementById('payAmount').value) || 0;
-			const change = pay - total;
+        // 中止時のポップアップ
+        function confirmCancel() {
+            if (confirm("会計を中止して座席一覧に戻りますか？")) {
+                location.href = '${pageContext.request.contextPath}/TableListServlet';
+            }
+        }
 
-			const display = document.getElementById('changeResult');
-			if (change >= 0) {
-				display.textContent = change.toLocaleString();
-				display.style.color = "#4A90E2";
-			} else {
-				display.textContent = "不足";
-				display.style.color = "#d9534f";
-			}
-		}
-	</script>
+        // お釣り計算
+        function calcChange() {
+            const total = parseInt("${vm.totalPrice}");
+            const pay = parseInt(document.getElementById('payAmount').value) || 0;
+            const change = pay - total;
+
+            const display = document.getElementById('changeResult');
+            if (change >= 0) {
+                display.textContent = change.toLocaleString();
+                display.style.color = "#5d5046";
+            } else {
+                display.textContent = "不足";
+                display.style.color = "#9e4343";
+            }
+        }
+    </script>
 
 </body>
 </html>

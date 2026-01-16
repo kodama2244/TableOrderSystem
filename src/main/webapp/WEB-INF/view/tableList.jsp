@@ -11,17 +11,18 @@
             margin: 0;
             padding: 0;
             font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f2ede4; /* ベージュ系の背景 */
             color: #333;
             height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow: hidden; /* 全体はスクロールさせない */
         }
 
         header {
-            background-color: #333;
-            color: white;
-            padding: 15px 30px;
+            background-color: transparent;
+            color: #5d5046;
+            padding: 10px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -29,77 +30,70 @@
         }
 
         h2 { margin: 0; font-size: 24px; }
+        #clock { font-size: 20px; font-weight: bold; }
 
-        /* --- 座席グリッドエリア --- */
+        /* --- 座席グリッドエリア（画面いっぱいに広げる） --- */
         .table-grid {
             flex-grow: 1;
-            padding: 30px;
+            padding: 10px 40px 20px 40px;
             display: grid;
-            /* 1行に4列、等幅で配置 */
+            /* 1行に4つ固定。画面幅いっぱいに広がる */
             grid-template-columns: repeat(4, 1fr);
+            /* 縦方向の間隔を少し狭くして、縦長感を解消 */
+            grid-template-rows: repeat(4, 1fr);
             gap: 20px;
-            overflow-y: auto;
-            align-content: start;
+            box-sizing: border-box;
         }
 
-        /* 各座席カードの基本スタイル */
+        /* 各座席カードのスタイル */
         .table-card {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            height: 200px;
+            background-color: #fffaf5;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(93, 80, 70, 0.15);
+            border: 1px solid #dcd3c7;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            transition: transform 0.1s;
-            position: relative;
-            padding: 20px;
+            padding: 10px;
             box-sizing: border-box;
+            /* 高さが足りない場合は自動で調整されるが、基本はgrid内で均等 */
         }
 
         .table-number {
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 15px;
+            font-size: 22px;
+            color: #5d5046;
+            margin-bottom: 5px;
         }
 
-        /* ステータス：案内可（空席） */
+        /* ステータス：案内可 */
         .status-vacant {
-            color: #bbb;
-            font-size: 20px;
-            font-weight: bold;
+            color: #9e938a;
+            font-size: 16px;
         }
 
-        /* お会計ボタン（お客様あり） */
+        /* お会計ボタン（画像に近いコンパクトなサイズ） */
         .bill-form {
-            width: 100%;
-            margin-top: 10px;
+            width: 70%;
         }
 
         .btn-bill {
             width: 100%;
-            padding: 20px 0;
-            background-color: #444;
+            padding: 10px 0;
+            background-color: #6b5443;
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 22px;
+            border-radius: 4px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .btn-bill:active {
-            background-color: #000;
-            transform: scale(0.95);
-        }
-
-        /* お客様がいる場合のカード強調（任意で枠線をつけるなど） */
-        .table-card.has-customer {
-            border: 2px solid #444;
-            background-color: #fff;
+            background-color: #4a3a2e;
+            transform: scale(0.98);
         }
 
     </style>
@@ -113,7 +107,7 @@
 
 <div class="table-grid">
     <c:forEach var="table" items="${ viewModel.tableList }">
-        <div class="table-card ${ table.hasCustomer ? 'has-customer' : '' }">
+        <div class="table-card">
             
             <div class="table-number">${ table.tableNumber }卓</div>
 
@@ -135,7 +129,6 @@
 </div>
 
 <script>
-    // 時計機能
     function updateClock() {
         const now = new Date();
         document.getElementById('clock').textContent = 
@@ -146,4 +139,4 @@
 </script>
 
 </body>
-</html>	
+</html>
