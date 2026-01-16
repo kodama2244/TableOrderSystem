@@ -46,25 +46,23 @@
         background-color: #fff;
         border-radius: 8px;
         border: 1px solid #ccc;
-        position: relative;
     }
 
     .sales-table {
         width: 100%;
-        /* 列幅を固定してズレを防止 */
         table-layout: fixed; 
         border-collapse: separate;
         border-spacing: 0;
     }
 
-    /* 列ごとの幅指定 (合計100%) */
-    .col-name { width: 35%; }
-    .col-opt  { width: 20%; }
+    /* 列幅の指定: 時刻を右端へ */
+    .col-name { width: 33%; }
+    .col-opt  { width: 15%; }
     .col-unit { width: 15%; }
     .col-qty  { width: 10%; }
-    .col-sub  { width: 20%; }
+    .col-sub  { width: 15%; }
+    .col-time { width: 12%; }
 
-    /* --- 見出しの固定と縦線 --- */
     .sales-table thead th {
         position: sticky;
         top: 0;
@@ -73,32 +71,18 @@
         padding: 15px 12px;
         text-align: left;
         border-bottom: 2px solid #333;
-        /* 縦線の追加 */
         border-right: 1px solid #ccc; 
         z-index: 100;
-        background-clip: padding-box;
     }
 
-    /* 最後の列の縦線は不要 */
-    .sales-table thead th:last-child {
-        border-right: none;
-    }
-
-    /* --- データの縦線 --- */
     .sales-table tbody td {
         padding: 15px 12px;
         border-bottom: 1px solid #eee;
-        /* 縦線の追加 */
         border-right: 1px solid #eee;
         background-color: #fff;
-        position: relative;
-        z-index: 1;
-        /* 長い商品名の折り返し設定 */
-        word-wrap: break-word;
-        overflow-wrap: break-word;
     }
 
-    .sales-table tbody td:last-child {
+    .sales-table thead th:last-child, .sales-table tbody td:last-child {
         border-right: none;
     }
 
@@ -116,7 +100,6 @@
     }
 
     .total-display {
-        background: #f8f9fa;
         border: 2px solid #333;
         padding: 10px 25px;
         display: flex;
@@ -167,6 +150,7 @@
                         <col class="col-unit">
                         <col class="col-qty">
                         <col class="col-sub">
+                        <col class="col-time">
                     </colgroup>
                     <thead>
                         <tr>
@@ -175,6 +159,7 @@
                             <th class="num-col">単価(込)</th>
                             <th class="num-col">数量</th>
                             <th class="num-col">小計</th>
+                            <th>販売時刻</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -185,6 +170,8 @@
                                 <td class="num-col">${item.productPrice + item.optionPrice}円</td>
                                 <td class="num-col">${item.productQuantity}</td>
                                 <td class="num-col">${(item.productPrice + item.optionPrice) * item.productQuantity}円</td>
+                                <%-- 販売時刻を右端に移動 --%>
+                                <td>${item.orderDate}</td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -196,9 +183,7 @@
     <div class="footer-summary">
         <div class="total-display">
             <span style="font-weight:bold;">対象日: ${vm.targetDate} ／ 総売上高</span>
-            <span class="total-amount">
-                <c:out value="${not empty vm ? vm.totalSales : 0}" /> <small>円</small>
-            </span>
+            <span class="total-amount">${vm.totalSales} <small>円</small></span>
         </div>
 
         <form action="AdminMenuServlet" method="get" style="margin:0;">

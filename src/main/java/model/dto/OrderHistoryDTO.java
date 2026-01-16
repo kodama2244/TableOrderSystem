@@ -9,8 +9,17 @@ public class OrderHistoryDTO {
 	private int optionPrice;
 	private int productPrice;
 	private int tableNumber;
+	private String orderDate;
 	
 	
+	public String getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
+	}
+
 	public int getOptionPrice() {
 		return optionPrice;
 	}
