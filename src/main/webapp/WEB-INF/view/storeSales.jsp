@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="refresh" content="5">
 <title>店舗売上管理</title>
 <style>
     body {

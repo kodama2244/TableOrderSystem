@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="refresh" content="5">
 <meta charset="UTF-8">
 <title>注文履歴</title>
 <style>

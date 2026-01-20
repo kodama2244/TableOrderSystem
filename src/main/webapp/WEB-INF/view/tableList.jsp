@@ -4,6 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="5">
     <title>レジ座席一覧画面</title>
     <style>
         /* --- 全体の基本設定 --- */
