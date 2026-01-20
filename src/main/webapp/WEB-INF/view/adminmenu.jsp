@@ -56,7 +56,7 @@
         .menu-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            border-color: #4A90E2;
+            border-color: #333; /* モノトーンに合わせて黒に */
         }
 
         .menu-item:active {
@@ -120,15 +120,15 @@
             <span class="desc">商品の追加・削除・編集</span>
         </a>
 
-        <a href="#" class="menu-item" style="opacity: 0.6; cursor: not-allowed;">
-            <span class="icon">📦</span>
-            <span class="label">在庫管理</span>
-            <span class="desc">準備中</span>
+        <a href="${pageContext.request.contextPath}/AdminRegisterServlet" class="menu-item">
+            <span class="icon">👤</span>
+            <span class="label">スタッフ管理</span>
+            <span class="desc">新規管理者の登録・追加</span>
         </a>
 
         <a href="#" class="menu-item" style="opacity: 0.6; cursor: not-allowed;">
             <span class="icon">⚙️</span>
-            <span class="label">設定</span>
+            <span class="label">システム設定</span>
             <span class="desc">準備中</span>
         </a>
     </div>

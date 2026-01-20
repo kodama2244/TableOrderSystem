@@ -161,4 +161,24 @@
     <servlet-name>AdminMenuServlet</servlet-name>
     <url-pattern>/AdminMenuServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminLoginServlet</display-name>
+    <servlet-name>AdminLoginServlet</servlet-name>
+    <servlet-class>controller.AdminLoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminLoginServlet</servlet-name>
+    <url-pattern>/AdminLoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminRegisterServlet</display-name>
+    <servlet-name>AdminRegisterServlet</servlet-name>
+    <servlet-class>controller.AdminRegisterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminRegisterServlet</servlet-name>
+    <url-pattern>/AdminRegisterServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
