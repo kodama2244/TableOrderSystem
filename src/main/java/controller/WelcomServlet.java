@@ -28,7 +28,7 @@ public class WelcomServlet extends HttpServlet {
             
             // 2. ★追加：テーブル状態を「利用中」に更新する
             TabletNumberService service = new TabletNumberService();
-            service.setNumber(tableNumber); 
+            service.updateTableStatus(tableNumber); 
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/welcom.jsp");

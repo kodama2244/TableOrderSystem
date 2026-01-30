@@ -35,7 +35,7 @@
 </head>
 <body>
     <div class="login-container">
-        <h2>ADMIN LOGIN</h2>
+        <h2>ログイン</h2>
         <form action="AdminLoginServlet" method="post">
             <div class="form-group">
                 <label>ログインID</label>

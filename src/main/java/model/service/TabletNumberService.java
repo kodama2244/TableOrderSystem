@@ -9,8 +9,8 @@ public class TabletNumberService {
     /**
      * 指定されたテーブル番号の状態を「利用中」にする
      */
-    public void setNumber(int tableNumber) {
+    public void updateTableStatus(int tableNumber) {
         // DAOの更新メソッドを呼び出す
-        tableDAO.updateToOccupied(tableNumber);
+        tableDAO.updateTableStatus(tableNumber);
     }
 }

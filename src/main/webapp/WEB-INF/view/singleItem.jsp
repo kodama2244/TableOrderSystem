@@ -32,37 +32,63 @@
         text-align: center; font-weight: bold; border-radius: 5px; background-color: #fff;
     }
 
-    .back-btn {
-        background-color: #777; color: white; border: none; padding: 20px;
-        font-size: 18px; font-weight: bold; border-radius: 5px; cursor: pointer;
-        width: 100%; margin-top: auto;
-    }
-
+    /* --- 右パネル --- */
     .right-panel { display: flex; flex-direction: column; gap: 20px; height: 100%; }
 
     .product-title { border-bottom: 2px solid #333; padding-bottom: 10px; font-size: 28px; font-weight: bold; }
 
     .description-box {
-        border: 1px solid #ccc; padding: 15px; font-size: 15px; line-height: 1.6;
+        border: 1px solid #ccc; padding: 15px; 
         border-radius: 5px; background-color: #fafafa; flex-grow: 1; overflow-y: auto;
     }
 
-    /* --- オプションチェックボタンのスタイル --- */
-    .option-check-wrapper { display: flex; flex-direction: column; gap: 10px; }
+    .description-box strong {
+        display: inline-block;
+        font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+        font-size: 14px; letter-spacing: 0.1em; color: #555;
+        margin-bottom: 5px; border-bottom: 1px solid #ccc;
+    }
 
+    .description-box p {
+        font-family: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;
+        font-size: 17px; line-height: 1.8; color: #444;
+        margin-bottom: 25px; white-space: pre-wrap;
+    }
+
+    /* --- ボタンサイズを統一 --- */
+    .back-btn, .cart-btn {
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #333;
+        color: white;
+        border: none;
+        padding: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.2s;
+        text-align: center;
+    }
+
+    .back-btn { margin-top: auto; }
+    .cart-btn { margin-top: 15px; }
+
+    .cart-btn:hover, .back-btn:hover { background-color: #555; }
+    .cart-btn:active, .back-btn:active { opacity: 0.8; transform: translateY(1px); }
+
+    /* --- オプションチェックボタン --- */
+    .option-check-wrapper { display: flex; flex-direction: column; gap: 10px; }
     .option-check-label {
         display: flex; justify-content: space-between; align-items: center;
         background-color: #eee; border: 2px solid #333; padding: 12px 20px;
         border-radius: 5px; cursor: pointer; font-size: 16px; transition: 0.2s;
     }
-
-    /* チェックが入った時のスタイル */
     .option-check-label.selected { background-color: #333; color: white; }
-
     .option-check-label::after { content: '□'; font-size: 20px; }
     .option-check-label.selected::after { content: '✓'; }
 
-    /* --- 操作ボタン --- */
+    /* --- 数量操作 --- */
     .quantity-control { display: flex; align-items: center; gap: 15px; justify-content: flex-end; }
     .qty-btn {
         background-color: #444; color: white; border: none;
@@ -70,13 +96,6 @@
     }
     .qty-input { width: 50px; height: 45px; font-size: 20px; text-align: center; border: 1px solid #333; border-radius: 5px; }
 
-    .cart-btn {
-        background-color: #333; color: white; border: none; padding: 20px;
-        font-size: 22px; font-weight: bold; border-radius: 5px; cursor: pointer;
-        width: 100%; margin-top: 15px;
-    }
-
-    .cart-btn:active, .back-btn:active { opacity: 0.8; }
 </style>
 </head>
 <body>
@@ -90,7 +109,6 @@
         
         <div class="option-check-wrapper">
             <c:if test="${sivm.optionId != 0}">
-                <%-- チェックボタン形式 --%>
                 <label id="optionLabel" class="option-check-label" onclick="toggleOption()">
                     <span><strong>${sivm.optionName}</strong> (+${sivm.optionPrice}円)</span>
                 </label>
@@ -102,8 +120,8 @@
     <div class="right-panel">
         <div class="product-title">${sivm.productName}</div>
         <div class="description-box">
-            <p><strong>【商品説明】</strong><br>${sivm.productDescription}</p>
-            <p><strong>【アレルギー情報】</strong><br>${sivm.productAllergy}</p>
+            <p><strong>DESCRIPTION</strong><br>${sivm.productDescription}</p>
+            <p><strong>ALLERGY INFO</strong><br>${sivm.productAllergy}</p>
         </div>
 
         <form action="CartServlet" method="post" style="display: flex; flex-direction: column;">

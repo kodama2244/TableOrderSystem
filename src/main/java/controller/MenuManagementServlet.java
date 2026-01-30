@@ -85,7 +85,7 @@ public class MenuManagementServlet extends HttpServlet {
 					filePart.write(uploadPath + File.separator + fileName);
 
 					// パラメータ取得
-					String id = request.getParameter("productId");
+				
 					String name = request.getParameter("productName");
 					String price = request.getParameter("productPrice");
 					String categoryId = request.getParameter("categoryId");
@@ -102,7 +102,6 @@ public class MenuManagementServlet extends HttpServlet {
 
 					// DAOに渡すリスト作成
 					List<String> plist = new ArrayList<>();
-					plist.add(id); // index 0: product_id
 					plist.add(categoryId); // index 1: category_id
 					plist.add(name); // index 2: product_name
 					plist.add(price); // index 3: product_price

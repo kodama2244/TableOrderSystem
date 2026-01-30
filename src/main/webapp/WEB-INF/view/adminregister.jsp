@@ -16,7 +16,7 @@
         border: 2px solid #333; border-radius: 8px;
         box-shadow: 10px 10px 0px #333;
     }
-    h2 { text-align: center; margin-bottom: 30px; letter-spacing: 2px; border-bottom: 2px solid #333; padding-bottom: 10px; }
+    h2 { text-align: center; margin-bottom: 30px; letter-spacing: 2px;  padding-bottom: 10px; }
     .form-group { margin-bottom: 20px; }
     label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px; }
     input {
@@ -37,7 +37,7 @@
 </head>
 <body>
     <div class="register-container">
-        <h2>STAFF REGISTRATION</h2>
+        <h2>新規登録</h2>
         
         <form action="AdminRegisterServlet" method="post">
             <div class="form-group">

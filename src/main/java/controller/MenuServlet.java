@@ -22,24 +22,25 @@ public class MenuServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		
-		String category = request.getParameter("category");
-		if (category == null) {
-			category = "1";
-		}
-//		String category = "1";
-		MenuService ms = new MenuService();
-		List<ProductOptionDTO> products = ms.getProducts(category);
-		MenuViewModel mvm = new MenuViewModel();
-		mvm.setProducts(products);
-		//DBからメニューとってくる
-		request.setAttribute("mvm", mvm);
-		request.setAttribute("category", category);
-		//メニューとカテゴリー情報をスコープに保存
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/menu.jsp");
-		dispatcher.forward(request, response);
+	    
+	    String category = request.getParameter("category");
+
+	    // null または 空文字 の場合にデフォルト値 "1" をセット
+	    if (category == null || category.isEmpty()) {
+	        category = "1";
+	    }
+
+	    MenuService ms = new MenuService();
+	    List<ProductOptionDTO> products = ms.getProducts(category);
+	    
+	    MenuViewModel mvm = new MenuViewModel();
+	    mvm.setProducts(products);
+	    
+	    request.setAttribute("mvm", mvm);
+	    request.setAttribute("category", category);
+
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/menu.jsp");
+	    dispatcher.forward(request, response);
 	}
 
 	/**

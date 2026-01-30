@@ -76,27 +76,26 @@ public class ProductOptionDAO {
     public void setProduct(List<String> plist) {
         DBManager manager = DBManager.getInstance();
 
-        // 1. カラムに option_id を追加
-        // 2. VALUES の ? を1つ増やして 8個 にする
+        // 1. product_id をカラムリストから削除
+        // 2. VALUES の ? を 1つ減らして 7個 にする
         String sql = "INSERT INTO product("
-                + "product_id, category_id, product_name, product_price, "
+                + "category_id, product_name, product_price, " // product_id は書かない
                 + "product_description, product_image, product_allergy, option_id, created_at, updated_at"
-                + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, SYSDATE)";
+                + ") VALUES (?, ?, ?, ?, ?, ?, ?, SYSDATE, SYSDATE)";
 
         try (Connection cn = manager.getConnection();
                 PreparedStatement ps = cn.prepareStatement(sql)) {
             
-            ps.setInt(1, Integer.parseInt(plist.get(0))); // product_id
-            ps.setInt(2, Integer.parseInt(plist.get(1))); // category_id
-            ps.setString(3, plist.get(2));                // product_name
-            ps.setInt(4, Integer.parseInt(plist.get(3))); // product_price
-            ps.setString(5, plist.get(4));                // product_description
-            ps.setString(6, plist.get(5));                // product_image
-            ps.setString(7, plist.get(6));                // product_allergy
-            ps.setInt(8, Integer.parseInt(plist.get(7))); // ★option_id を追加！
+            // plist.get(0) が product_id だった場合、それは使わずに get(1) から開始する
+        	ps.setInt(1, Integer.parseInt(plist.get(0))); // categoryId
+        	ps.setString(2, plist.get(1));                // name
+        	ps.setInt(3, Integer.parseInt(plist.get(2))); // price
+        	ps.setString(4, plist.get(3));                // description
+        	ps.setString(5, plist.get(4));                // fileName
+        	ps.setString(6, plist.get(5));                // allergy
+        	ps.setInt(7, Integer.parseInt(plist.get(6))); // optionId // option_id
 
             ps.executeUpdate();
-            System.out.println("商品を登録しました。optionId: " + plist.get(7));
 
         } catch (SQLException e) {
             e.printStackTrace();

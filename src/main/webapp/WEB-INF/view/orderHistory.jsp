@@ -143,7 +143,7 @@ h2 {
 }
 
 .btn-back {
-	background-color: #555;
+	background-color: #444;
 }
 
 .btn-checkout {

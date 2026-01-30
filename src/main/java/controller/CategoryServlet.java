@@ -36,7 +36,7 @@ public class CategoryServlet extends HttpServlet {
             
             // サービスを呼んでDBを「利用中」に変更
             TabletNumberService service = new TabletNumberService();
-            service.setNumber(tableNumber);
+            service.updateTableStatus(tableNumber);
             
             // ログ確認用
             System.out.println("2周目以降対応: " + tableNumber + "卓を利用中に更新しました。");

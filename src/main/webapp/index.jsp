@@ -12,7 +12,7 @@
 <a href="TabletNumberServlet">TabletNumberServletから</a>
 <h1>店舗ログイン画面</h1>
 <a href="AdminLoginServlet">AdminLoginServletから</a>
-<p>id : kodama , password : pass</p>
+<p>id : G08 , password : pass</p>
 <h1>キッチン・ホール画面</h1>
 <a href="KitchenHallServlet">KitchenHallServletから</a>
 <h1>レジ画面</h1>

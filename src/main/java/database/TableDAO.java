@@ -73,7 +73,7 @@ public class TableDAO {
         }
     }
     
-    public void updateToOccupied(int tableNumber) {
+    public void updateTableStatus(int tableNumber) {
         DBManager manager = DBManager.getInstance();
         // 画像の「テーブル」定義に合わせて SQL を作成
         String sql = "UPDATE TABLE_INFO SET TABLE_STATUS = '利用中', UPDATED_AT = SYSDATE WHERE TABLE_NUMBER = ?";
