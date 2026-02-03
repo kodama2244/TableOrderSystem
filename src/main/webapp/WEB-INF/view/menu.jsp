@@ -213,7 +213,7 @@ body {
 		<form action="MenuServlet" method="get" class="category-form">
 			<
 			<c:forEach var="item"
-				items="${['そば', 'うどん', '丼もの', '期間限定', 'サイド', '飲み物']}"
+				items="${['そば', 'うどん', '丼もの', 'おすすめ', 'サイド', '飲み物']}"
 				varStatus="status">
 				<%-- status.count を一度変数に受けて、文字列として比較する --%>
 				<c:set var="currentCat" value="${status.count}" />

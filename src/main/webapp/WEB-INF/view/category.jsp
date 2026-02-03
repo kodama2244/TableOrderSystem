@@ -61,7 +61,7 @@
             <button type="submit" name="category" value="1" class="cat-btn">そば</button>
             <button type="submit" name="category" value="2" class="cat-btn">うどん</button>
             <button type="submit" name="category" value="3" class="cat-btn">丼もの</button>
-            <button type="submit" name="category" value="4" class="cat-btn">期間限定</button>
+            <button type="submit" name="category" value="4" class="cat-btn">おすすめ</button>
             <button type="submit" name="category" value="5" class="cat-btn">サイドメニュー</button>
             <button type="submit" name="category" value="6" class="cat-btn">飲み物</button>
         </div>

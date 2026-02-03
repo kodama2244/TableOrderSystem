@@ -239,7 +239,7 @@ td {
 						<option value="1">そば</option>
 						<option value="2">うどん</option>
 						<option value="3">丼もの</option>
-						<option value="4">期間限定</option>
+						<option value="4">おすすめ</option>
 						<option value="5">サイドメニュー</option>
 						<option value="6">飲み物</option>
 					</select>
@@ -267,7 +267,7 @@ td {
 					<button type="submit" name="category" value="1" class="btn-cat ${currentCategory == 1 ? 'active-cat' : ''}">そば</button>
 					<button type="submit" name="category" value="2" class="btn-cat ${currentCategory == 2 ? 'active-cat' : ''}">うどん</button>
 					<button type="submit" name="category" value="3" class="btn-cat ${currentCategory == 3 ? 'active-cat' : ''}">丼もの</button>
-					<button type="submit" name="category" value="4" class="btn-cat ${currentCategory == 4 ? 'active-cat' : ''}">期間限定</button>
+					<button type="submit" name="category" value="4" class="btn-cat ${currentCategory == 4 ? 'active-cat' : ''}">おすすめ</button>
 					<button type="submit" name="category" value="5" class="btn-cat ${currentCategory == 5 ? 'active-cat' : ''}">サイド</button>
 					<button type="submit" name="category" value="6" class="btn-cat ${currentCategory == 6 ? 'active-cat' : ''}">飲み物</button>
 				</form>
