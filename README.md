@@ -6,8 +6,8 @@ DB設計からフロント・バックエンドの実装まで一貫して行い
 
 ## 🎥 動作デモ（YouTube）
 [![デモ動画](https://img.youtube.com/vi/0CDwLaZyAu8/0.jpg)](https://youtu.be/0CDwLaZyAu8)
-[https://youtu.be/0CDwLaZyAu8](https://youtu.be/0CDwLaZyAu8)
-
+[https://youtu.be/0CDwLaZyAu8](https://youtu.be/0CDwLaZyAu8)  
+※動画が長いため倍速やタイムスタンプをご活用ください
 > **【見どころガイド】**
 > 各画面の役割ごとにチャプターを分けています。
 > - **00:00** お客様画面：直感的な注文・カート機能
